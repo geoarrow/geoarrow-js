@@ -1,2 +1,3 @@
-# geoarrow-js
-GeoArrow in pure JavaScript (i.e. no WebAssembly)
+# `@geoarrow/geoarrow-js`
+
+TypeScript implementation of GeoArrow.
