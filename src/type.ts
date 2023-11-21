@@ -5,7 +5,8 @@ export type SeparatedCoord = arrow.Struct<{
   x: arrow.Float64;
   y: arrow.Float64;
 }>;
-export type Coord = InterleavedCoord | SeparatedCoord;
+// TODO: support separated coords
+export type Coord = InterleavedCoord; // | SeparatedCoord;
 export type Point = Coord;
 export type LineString = arrow.List<Coord>;
 export type Polygon = arrow.List<arrow.List<Coord>>;

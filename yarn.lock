@@ -43,6 +43,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.12.0":
+  version: 7.23.4
+  resolution: "@babel/runtime@npm:7.23.4"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 6ef4f6dcc4ec4d74cb9f6c26a26e92d016b36debd167be48cae293fbd990b3157fb1d8d21c531285da15a5bda9ccb23e651b56234941e03d91c8af69d4c593a9
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -210,6 +219,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@geoarrow/geoarrow-js@workspace:."
   dependencies:
+    "@math.gl/polygon": "npm:^4.0.0"
     "@rollup/plugin-terser": "npm:^0.4.3"
     "@rollup/plugin-typescript": "npm:^11.1.2"
     "@types/node": "npm:^20.9.3"
@@ -306,6 +316,32 @@ __metadata:
     "@jridgewell/resolve-uri": "npm:^3.1.0"
     "@jridgewell/sourcemap-codec": "npm:^1.4.14"
   checksum: 683117e4e6707ef50c725d6d0ec4234687ff751f36fa46c2b3068931eb6a86b49af374d3030200777666579a992b7470d1bd1c591e9bf64d764dda5295f33093
+  languageName: node
+  linkType: hard
+
+"@math.gl/core@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@math.gl/core@npm:4.0.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.0"
+    "@math.gl/types": "npm:4.0.0"
+  checksum: 8208e9d917d3b8b90db1546b3dd69512a26556a832d95f23580909bf76349ee83debf95db974528254f7bed2ad36c25a0457c73b9d208b51f866a88304b6ac8c
+  languageName: node
+  linkType: hard
+
+"@math.gl/polygon@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@math.gl/polygon@npm:4.0.0"
+  dependencies:
+    "@math.gl/core": "npm:4.0.0"
+  checksum: 97a1e9e7270c89d47d367a193ff9c99b914770dabc7adbdc24f6edd58c24b2f49b30d0d62840e9db1968d32062b86ac92da04b84ef004d1d932d1202107a57d4
+  languageName: node
+  linkType: hard
+
+"@math.gl/types@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@math.gl/types@npm:4.0.0"
+  checksum: 8fce7215bf7b9c48c09026fcd41f86b5c118afa3580a937831198f82324e468aa9aec53942bf7aa848f9782f2142225b891a0eb8e403f7b8cec669308272147b
   languageName: node
   linkType: hard
 
@@ -1774,6 +1810,13 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: 200cd65bf2e0be7ba6055f647091b725a45dd2a6abef03bf2380ce701fd5edccee40b49b9d15edab7ac08a762bf83cb4081e31ec2673a5bfb549a36ba21570df
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "regenerator-runtime@npm:0.14.0"
+  checksum: 6c19495baefcf5fbb18a281b56a97f0197b5f219f42e571e80877f095320afac0bdb31dab8f8186858e6126950068c3f17a1226437881e3e70446ea66751897c
   languageName: node
   linkType: hard
 
