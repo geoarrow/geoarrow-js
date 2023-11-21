@@ -20,6 +20,13 @@ export type PolygonData = arrow.Data<Polygon>;
 export type MultiPointData = arrow.Data<MultiPoint>;
 export type MultiLineStringData = arrow.Data<MultiLineString>;
 export type MultiPolygonData = arrow.Data<MultiPolygon>;
+export type GeoArrowData =
+  | PointData
+  | LineStringData
+  | PolygonData
+  | MultiPointData
+  | MultiLineStringData
+  | MultiPolygonData;
 
 export function isPointData(data: arrow.Data): data is PointData {
   return isPoint(data.type);

@@ -13,6 +13,13 @@ export type Polygon = arrow.List<arrow.List<Coord>>;
 export type MultiPoint = arrow.List<Coord>;
 export type MultiLineString = arrow.List<arrow.List<Coord>>;
 export type MultiPolygon = arrow.List<arrow.List<arrow.List<Coord>>>;
+export type GeoArrowType =
+  | Point
+  | LineString
+  | Polygon
+  | MultiPoint
+  | MultiLineString
+  | MultiPolygon;
 
 /** Check that the given type is a Point data type */
 export function isPoint(type: arrow.DataType): type is Point {
