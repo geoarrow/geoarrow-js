@@ -45,5 +45,8 @@
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"
+  },
+  "dependencies": {
+    "@math.gl/polygon": "^4.0.0"
   }
 }
