@@ -26,7 +26,7 @@ export function isPointVector(vector: arrow.Vector): vector is PointVector {
 }
 
 export function isLineStringVector(
-  vector: arrow.Vector
+  vector: arrow.Vector,
 ): vector is LineStringVector {
   return isLineString(vector.type);
 }
@@ -36,19 +36,19 @@ export function isPolygonVector(vector: arrow.Vector): vector is PolygonVector {
 }
 
 export function isMultiPointVector(
-  vector: arrow.Vector
+  vector: arrow.Vector,
 ): vector is MultiPointVector {
   return isMultiPoint(vector.type);
 }
 
 export function isMultiLineStringVector(
-  vector: arrow.Vector
+  vector: arrow.Vector,
 ): vector is MultiLineStringVector {
   return isMultiLineString(vector.type);
 }
 
 export function isMultiPolygonVector(
-  vector: arrow.Vector
+  vector: arrow.Vector,
 ): vector is MultiPolygonVector {
   return isMultiPolygon(vector.type);
 }

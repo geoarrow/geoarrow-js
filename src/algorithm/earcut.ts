@@ -10,7 +10,7 @@ export function earcut(input: PolygonData): Uint32Array;
 export function earcut(input: PolygonVector): Uint32Array[];
 
 export function earcut(
-  input: PolygonData | PolygonVector
+  input: PolygonData | PolygonVector,
 ): Uint32Array | Uint32Array[] {
   if ("data" in input) {
     return input.data.map((data) => earcut(data));
@@ -53,7 +53,7 @@ function earcutSinglePolygon(data: PolygonData, geomIndex: number): number[] {
 
   const slicedFlatCoords = flatCoords.values.subarray(
     coordsBegin * dim,
-    coordsEnd * dim
+    coordsEnd * dim,
   );
 
   const initialCoordIndex = ringOffsets[ringBegin];

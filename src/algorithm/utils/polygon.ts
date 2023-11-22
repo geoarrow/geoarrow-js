@@ -8,7 +8,7 @@ import {
 
 export function makeMathGlPolygon(
   data: PolygonData,
-  geomIndex: number
+  geomIndex: number,
 ): Polygon {
   const geomOffsets = data.valueOffsets;
   const ringsData = getPolygonChild(data);
@@ -26,7 +26,7 @@ export function makeMathGlPolygon(
 
   const slicedFlatCoords = flatCoordData.values.subarray(
     coordsBegin * dim,
-    coordsEnd * dim
+    coordsEnd * dim,
   );
   return new Polygon(slicedFlatCoords, {
     size: dim,
