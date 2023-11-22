@@ -17,15 +17,15 @@ export enum Winding {
  */
 export function windingDirection(input: PolygonData): arrow.Data<arrow.Bool>;
 export function windingDirection(
-  input: PolygonVector
+  input: PolygonVector,
 ): arrow.Vector<arrow.Bool>;
 
 export function windingDirection(
-  input: PolygonData | PolygonVector
+  input: PolygonData | PolygonVector,
 ): arrow.Data<arrow.Bool> | arrow.Vector<arrow.Bool> {
   if ("data" in input) {
     return new arrow.Vector(
-      input.data.map((polygonData) => windingDirection(polygonData))
+      input.data.map((polygonData) => windingDirection(polygonData)),
     );
   }
 
@@ -55,20 +55,20 @@ export function windingDirection(
  */
 export function modifyWindingDirection(
   input: PolygonData,
-  winding: Winding
+  winding: Winding,
 ): void;
 export function modifyWindingDirection(
   input: PolygonVector,
-  winding: Winding
+  winding: Winding,
 ): void;
 
 export function modifyWindingDirection(
   input: PolygonData | PolygonVector,
-  winding: Winding
+  winding: Winding,
 ): void {
   if ("data" in input) {
     input.data.forEach((polygonData) =>
-      modifyWindingDirection(polygonData, winding)
+      modifyWindingDirection(polygonData, winding),
     );
     return;
   }

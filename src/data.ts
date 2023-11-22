@@ -45,7 +45,7 @@ export function isMultiPointData(data: arrow.Data): data is MultiPointData {
 }
 
 export function isMultiLineStringData(
-  data: arrow.Data
+  data: arrow.Data,
 ): data is MultiLineStringData {
   return isMultiLineString(data.type);
 }
