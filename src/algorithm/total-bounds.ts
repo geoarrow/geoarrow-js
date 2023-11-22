@@ -99,34 +99,16 @@ function totalBoundsNest0(vector: PointVector): Bbox {
 }
 
 function totalBoundsNest1(vector: LineStringVector): Bbox {
-  const bbox = new Bbox();
-  for (const data of vector.data) {
-    const pointData = getLineStringChild(data);
-    bbox.updateBbox(coordsBbox(pointData));
-  }
-
-  return bbox;
+  const pointVector = getLineStringChild(vector);
+  return totalBoundsNest0(pointVector);
 }
 
 function totalBoundsNest2(vector: PolygonVector): Bbox {
-  const bbox = new Bbox();
-  for (const data of vector.data) {
-    const lineStringData = getPolygonChild(data);
-    const pointData = getLineStringChild(lineStringData);
-    bbox.updateBbox(coordsBbox(pointData));
-  }
-
-  return bbox;
+  const lineStringVector = getPolygonChild(vector);
+  return totalBoundsNest1(lineStringVector);
 }
 
 function totalBoundsNest3(vector: MultiPolygonVector): Bbox {
-  const bbox = new Bbox();
-  for (const data of vector.data) {
-    const polygonData = getMultiPolygonChild(data);
-    const lineStringData = getPolygonChild(polygonData);
-    const pointData = getLineStringChild(lineStringData);
-    bbox.updateBbox(coordsBbox(pointData));
-  }
-
-  return bbox;
+  const polygonVector = getMultiPolygonChild(vector);
+  return totalBoundsNest2(polygonVector);
 }

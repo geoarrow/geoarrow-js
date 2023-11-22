@@ -20,6 +20,13 @@ export type PolygonVector = arrow.Vector<Polygon>;
 export type MultiPointVector = arrow.Vector<MultiPoint>;
 export type MultiLineStringVector = arrow.Vector<MultiLineString>;
 export type MultiPolygonVector = arrow.Vector<MultiPolygon>;
+export type GeoArrowVector =
+  | PointVector
+  | LineStringVector
+  | PolygonVector
+  | MultiPointVector
+  | MultiLineStringVector
+  | MultiPolygonVector;
 
 export function isPointVector(vector: arrow.Vector): vector is PointVector {
   return isPoint(vector.type);

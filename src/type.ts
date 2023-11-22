@@ -1,9 +1,12 @@
 import * as arrow from "apache-arrow";
 
-export type InterleavedCoord = arrow.FixedSizeList<arrow.Float64>;
+// Note: this apparently has to be arrow.Float and not arrow.Float64 to ensure
+// that recreating a data instance with arrow.makeData type checks using the
+// input's data type.
+export type InterleavedCoord = arrow.FixedSizeList<arrow.Float>;
 export type SeparatedCoord = arrow.Struct<{
-  x: arrow.Float64;
-  y: arrow.Float64;
+  x: arrow.Float;
+  y: arrow.Float;
 }>;
 // TODO: support separated coords
 export type Coord = InterleavedCoord; // | SeparatedCoord;
@@ -13,6 +16,13 @@ export type Polygon = arrow.List<arrow.List<Coord>>;
 export type MultiPoint = arrow.List<Coord>;
 export type MultiLineString = arrow.List<arrow.List<Coord>>;
 export type MultiPolygon = arrow.List<arrow.List<arrow.List<Coord>>>;
+export type GeoArrowType =
+  | Point
+  | LineString
+  | Polygon
+  | MultiPoint
+  | MultiLineString
+  | MultiPolygon;
 
 /** Check that the given type is a Point data type */
 export function isPoint(type: arrow.DataType): type is Point {
