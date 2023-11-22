@@ -10,7 +10,7 @@ export function area(input: PolygonData): arrow.Data<arrow.Float>;
 export function area(input: PolygonVector): arrow.Vector<arrow.Float>;
 
 export function area(
-  input: PolygonData | PolygonVector
+  input: PolygonData | PolygonVector,
 ): arrow.Data<arrow.Float> | arrow.Vector<arrow.Float> {
   if ("data" in input) {
     return new arrow.Vector(input.data.map((polygonData) => area(polygonData)));
@@ -38,11 +38,11 @@ export function signedArea(input: PolygonData): arrow.Data<arrow.Float>;
 export function signedArea(input: PolygonVector): arrow.Vector<arrow.Float>;
 
 export function signedArea(
-  input: PolygonData | PolygonVector
+  input: PolygonData | PolygonVector,
 ): arrow.Data<arrow.Float> | arrow.Vector<arrow.Float> {
   if ("data" in input) {
     return new arrow.Vector(
-      input.data.map((polygonData) => signedArea(polygonData))
+      input.data.map((polygonData) => signedArea(polygonData)),
     );
   }
 

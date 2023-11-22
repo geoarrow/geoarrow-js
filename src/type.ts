@@ -96,7 +96,7 @@ export function isMultiPoint(type: arrow.DataType): type is MultiPoint {
 }
 
 export function isMultiLineString(
-  type: arrow.DataType
+  type: arrow.DataType,
 ): type is MultiLineString {
   // Check the outer vector is a List
   if (!arrow.DataType.isList(type)) {

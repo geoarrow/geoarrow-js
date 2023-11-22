@@ -14,6 +14,10 @@ import {
 } from "../child.js";
 import { EXTENSION_NAME } from "../constants.js";
 
+function a(a: string, b: number) {
+  const c = a === b;
+}
+
 class Bbox {
   minX: number;
   minY: number;
