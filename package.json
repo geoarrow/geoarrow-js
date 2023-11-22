@@ -15,6 +15,9 @@
     "require": "./dist/geoarrow.cjs",
     "default": "./dist/geoarrow.es.mjs"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/geoarrow/geoarrow-js.git"
