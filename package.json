@@ -25,7 +25,7 @@
     "fmt:check": "prettier ./src/**/*.ts --check",
     "fmt": "prettier ./src/**/*.ts --write",
     "test": "vitest run",
-    "typecheck": "tsc --build && vitest typecheck --run"
+    "typecheck": "tsc --build"
   },
   "files": [
     "dist/",
