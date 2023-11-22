@@ -4,6 +4,7 @@ import dts from "rollup-plugin-dts";
 
 const input = "./src/index.ts";
 const sourcemap = true;
+const external = ["apache-arrow"];
 
 export default [
   {
@@ -14,6 +15,7 @@ export default [
       sourcemap,
     },
     plugins: [typescript()],
+    external,
   },
   {
     input,
@@ -22,6 +24,7 @@ export default [
       format: "es",
     },
     plugins: [dts()],
+    external,
   },
   {
     input,
@@ -31,15 +34,17 @@ export default [
       sourcemap,
     },
     plugins: [typescript()],
+    external,
   },
   {
     input,
     output: {
       file: "dist/geoarrow.umd.js",
       format: "umd",
-      name: "geoarrow",
+      name: "@geoarrow/geoarrow-js",
       sourcemap,
     },
     plugins: [typescript(), terser()],
+    external,
   },
 ];
