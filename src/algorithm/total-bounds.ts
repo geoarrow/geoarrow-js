@@ -14,7 +14,6 @@ import {
 } from "../child.js";
 import { EXTENSION_NAME } from "../constants.js";
 
-
 class Bbox {
   minX: number;
   minY: number;
