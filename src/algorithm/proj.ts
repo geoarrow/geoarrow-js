@@ -23,6 +23,7 @@ export function reproject<T extends GeoArrowType>(
   toProjection: string,
 ): arrow.Data<T> | arrow.Vector<T> {
   const projectionFn = proj4(fromProjection, toProjection);
+  // Check if an arrow.Vector
   if ("data" in input) {
     return new arrow.Vector(
       input.data.map((data) => reprojectData(data, projectionFn)),
