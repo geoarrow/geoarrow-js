@@ -10,7 +10,7 @@ type PostMessageField = {
   metadata: Map<string, string>;
 };
 
-export function rehydrateType<T extends arrow.Type>(
+function rehydrateType<T extends arrow.Type>(
   type: arrow.DataType<T> & { __type: T },
 ): arrow.DataType<T> {
   switch (type.__type) {
