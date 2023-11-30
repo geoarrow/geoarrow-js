@@ -23,34 +23,38 @@ type TypedArray =
  * the typed array's `byteOffset` is not `0` and where its `byteLength` does not
  * match its `array.buffer.byteLength`) are copied into new `ArrayBuffers`.
  *
- * Any internal buffers that are **not** a slice of a larger `ArrayBuffer` will
- * not be copied.
+ * If `force` is `true`, always clone internal buffers, even if not shared. If
+ * the default, `false`, any internal buffers that are **not** a slice of a
+ * larger `ArrayBuffer` will not be copied.
  */
 export function hardClone<T extends arrow.DataType>(
   input: arrow.Data<T>,
+  force?: boolean,
 ): arrow.Data<T>;
 export function hardClone<T extends arrow.DataType>(
   input: arrow.Vector<T>,
+  force?: boolean,
 ): arrow.Vector<T>;
 
 export function hardClone<T extends arrow.DataType>(
   data: arrow.Data<T> | arrow.Vector<T>,
+  force: boolean = false,
 ): arrow.Data<T> | arrow.Vector<T> {
   // Check if `data` is an arrow.Vector
   if ("data" in data) {
-    return new arrow.Vector(data.data.map((data) => hardClone(data)));
+    return new arrow.Vector(data.data.map((data) => hardClone(data, force)));
   }
 
   // Clone each of the children, recursively
   const clonedChildren: arrow.Data[] = [];
   for (const childData of data.children) {
-    clonedChildren.push(hardClone(childData));
+    clonedChildren.push(hardClone(childData, force));
   }
 
   // Clone the dictionary if there is one
   let clonedDictionary: arrow.Vector | undefined = undefined;
   if (data.dictionary !== undefined) {
-    clonedDictionary = hardClone(data.dictionary);
+    clonedDictionary = hardClone(data.dictionary, force);
   }
 
   // Buffers can have up to four entries. Each of these can be `undefined` for
@@ -64,12 +68,20 @@ export function hardClone<T extends arrow.DataType>(
   const clonedBuffers: Buffers<T> = {
     [arrow.BufferType.OFFSET]: cloneBuffer(
       data.buffers[arrow.BufferType.OFFSET],
+      force,
     ),
-    [arrow.BufferType.DATA]: cloneBuffer(data.buffers[arrow.BufferType.DATA]),
+    [arrow.BufferType.DATA]: cloneBuffer(
+      data.buffers[arrow.BufferType.DATA],
+      force,
+    ),
     [arrow.BufferType.VALIDITY]: cloneBuffer(
       data.buffers[arrow.BufferType.VALIDITY],
+      force,
     ),
-    [arrow.BufferType.TYPE]: cloneBuffer(data.buffers[arrow.BufferType.TYPE]),
+    [arrow.BufferType.TYPE]: cloneBuffer(
+      data.buffers[arrow.BufferType.TYPE],
+      force,
+    ),
   };
 
   // Note: the data.offset is passed on so that a sliced Data instance will not
@@ -142,16 +154,21 @@ function isTypedArraySliced(arr: TypedArray): boolean {
 
 /**
  * If a slice of a larger ArrayBuffer, clone to a fresh `ArrayBuffer`.
+ *
+ * If `force` is `true`, always clone the array, even if not shared.
  */
-function cloneBuffer<A extends TypedArray | undefined>(arr: A): A {
+function cloneBuffer<A extends TypedArray | undefined>(
+  arr: A,
+  force: boolean,
+): A {
   // Not all buffer types are defined for every type of Arrow array. E.g.
   // `arrow.BufferType.TYPE` is only defined for the Union type.
   if (arr === undefined) {
     return arr;
   }
 
-  // The current array is not a part of a larger ArrayBuffer
-  if (!isTypedArraySliced(arr)) {
+  // The current array is not a part of a larger ArrayBuffer, don't clone it
+  if (!force && !isTypedArraySliced(arr)) {
     return arr;
   }
 
