@@ -1,4 +1,5 @@
 import * as arrow from "apache-arrow";
+import type { Buffers } from "apache-arrow/data";
 
 type PostMessageDataType = {
   __type: arrow.Type;
@@ -101,6 +102,15 @@ export function rehydrateData<T extends arrow.DataType>(
     ? rehydrateVector(data.dictionary)
     : undefined;
 
+  // data.buffers is a getter, so we need to recreate Buffers from the
+  // attributes on data
+  const buffers: Buffers<T> = {
+    [arrow.BufferType.OFFSET]: data.valueOffsets,
+    [arrow.BufferType.DATA]: data.values,
+    [arrow.BufferType.VALIDITY]: data.nullBitmap,
+    [arrow.BufferType.TYPE]: data.typeIds,
+  };
+
   // @ts-expect-error
   return new arrow.Data(
     // @ts-expect-error
@@ -109,7 +119,7 @@ export function rehydrateData<T extends arrow.DataType>(
     data.length,
     // @ts-expect-error
     data._nullCount,
-    data.buffers,
+    buffers,
     children,
     dictionary,
   );
