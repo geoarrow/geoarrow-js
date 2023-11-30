@@ -1,19 +1,43 @@
 import * as arrow from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
 
-type PostMessageDataType = {
+// Typedefs that include only the information kept from a structuredClone
+type PostMessageDataType = Pick<arrow.DataType, "children"> & {
   __type: arrow.Type;
 };
-type PostMessageField = {
+type PostMessageField = Pick<arrow.Field, "name" | "nullable" | "metadata"> & {
   type: PostMessageDataType;
-  name: string;
-  nullable: boolean;
-  metadata: Map<string, string>;
 };
+type PostMessageData<T extends arrow.DataType> = Pick<
+  arrow.Data<T>,
+  | "type"
+  | "length"
+  | "offset"
+  | "stride"
+  | "children"
+  | "dictionary"
+  | "values"
+  | "typeIds"
+  | "nullBitmap"
+  | "valueOffsets"
+>;
+type PostMessageVector<T extends arrow.DataType> = Pick<
+  arrow.Vector,
+  "data" | "length" | "stride" | "numChildren"
+> & { type: PostMessageDataType };
 
 function rehydrateType<T extends arrow.Type>(
-  type: arrow.DataType<T> & { __type: T },
+  type: PostMessageDataType,
 ): arrow.DataType<T> {
+  // Note: by default in Arrow JS, the `DataType` is a class with no identifying
+  // attribute. Since a `structuredClone` is unable to maintain class
+  // information, the result of `structuredClone(new arrow.Utf8())` is an empty
+  // object `{}`.
+  //
+  // To get around this, in `preparePostMessage`, we manually assign the
+  // `typeId` (usually a getter) onto `__type`. Then when rehydrating the type,
+  // we can match on the `__type`, checking `arrow.Type` values, and
+  // reconstitute a full `arrow.DataType` object.
   switch (type.__type) {
     case arrow.Type.Null:
       return new arrow.Null() as arrow.DataType<T>;
@@ -89,13 +113,17 @@ function rehydrateType<T extends arrow.Type>(
 }
 
 function rehydrateField(field: PostMessageField): arrow.Field {
-  // @ts-expect-error
   const type = rehydrateType(field.type);
   return new arrow.Field(field.name, type, field.nullable, field.metadata);
 }
 
+/**
+ * Rehydrate a `Data` object that has been `structuredClone`'d or
+ * `postMessage`'d. The `Data` **must** have been prepared with
+ * `preparePostMessage` to be accurately recreated.
+ */
 export function rehydrateData<T extends arrow.DataType>(
-  data: arrow.Data<T>,
+  data: PostMessageData<T>,
 ): arrow.Data<T> {
   const children = data.children.map((childData) => rehydrateData(childData));
   const dictionary = data.dictionary
@@ -125,8 +153,13 @@ export function rehydrateData<T extends arrow.DataType>(
   );
 }
 
+/**
+ * Rehydrate a `Vector` object that has been `structuredClone`'d or
+ * `postMessage`'d. The `Vector` **must** have been prepared with
+ * `preparePostMessage` to be accurately recreated.
+ */
 export function rehydrateVector<T extends arrow.DataType>(
-  vector: arrow.Vector<T>,
+  vector: PostMessageVector<T>,
 ): arrow.Vector<T> {
   return new arrow.Vector(vector.data.map((data) => rehydrateData(data)));
 }

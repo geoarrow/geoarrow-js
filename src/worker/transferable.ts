@@ -6,13 +6,16 @@ import { hardClone } from "./hard-clone";
  */
 export function preparePostMessage<T extends arrow.DataType>(
   input: arrow.Data<T>,
+  forceClone?: boolean,
 ): [arrow.Data<T>, ArrayBuffer[]];
 export function preparePostMessage<T extends arrow.DataType>(
   input: arrow.Vector<T>,
+  forceClone?: boolean,
 ): [arrow.Vector<T>, ArrayBuffer[]];
 
 export function preparePostMessage<T extends arrow.DataType>(
   input: arrow.Data<T> | arrow.Vector<T>,
+  forceClone: boolean = false,
 ): [arrow.Data<T> | arrow.Vector<T>, ArrayBuffer[]] {
   // Check if `input` is an arrow.Vector
   if ("data" in input) {
@@ -29,8 +32,8 @@ export function preparePostMessage<T extends arrow.DataType>(
   }
 
   // Force clone into non-shared backing ArrayBuffers
-  // Note: this only clones if necessary.
-  input = hardClone(input);
+  // Note: this only clones if necessary, unless forceClone is `true`.
+  input = hardClone(input, forceClone);
 
   const transferArrayBuffers: ArrayBuffer[] = [];
 
