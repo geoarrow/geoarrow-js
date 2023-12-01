@@ -2,7 +2,9 @@
  * Strongly typed accessors for children, since arrow.Data.children[] is untyped
  */
 
-import * as arrow from "apache-arrow";
+import { Data } from "apache-arrow/data";
+import { Vector } from "apache-arrow/vector";
+import { Float } from "apache-arrow/type";
 import {
   LineStringData,
   MultiLineStringData,
@@ -10,7 +12,7 @@ import {
   MultiPolygonData,
   PointData,
   PolygonData,
-} from "./data.js";
+} from "./data";
 import {
   LineStringVector,
   MultiLineStringVector,
@@ -18,19 +20,19 @@ import {
   MultiPolygonVector,
   PointVector,
   PolygonVector,
-} from "./vector.js";
+} from "./vector";
 
-export function getPointChild(input: PointData): arrow.Data<arrow.Float>;
-export function getPointChild(input: PointVector): arrow.Vector<arrow.Float>;
+export function getPointChild(input: PointData): Data<Float>;
+export function getPointChild(input: PointVector): Vector<Float>;
 
 export function getPointChild(
   input: PointData | PointVector,
-): arrow.Data<arrow.Float> | arrow.Vector<arrow.Float> {
+): Data<Float> | Vector<Float> {
   if ("data" in input) {
     return input.getChildAt(0)!;
   }
 
-  return input.children[0] as arrow.Data<arrow.Float>;
+  return input.children[0] as Data<Float>;
 }
 
 export function getLineStringChild(input: LineStringData): PointData;

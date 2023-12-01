@@ -1,4 +1,7 @@
-import * as arrow from "apache-arrow";
+import { Data } from "apache-arrow/data";
+import { DataType } from "apache-arrow/type";
+import { Vector } from "apache-arrow/vector";
+import { BufferType } from "apache-arrow/enum";
 import type { Buffers } from "apache-arrow/data";
 
 type TypedArray =
@@ -27,32 +30,32 @@ type TypedArray =
  * the default, `false`, any internal buffers that are **not** a slice of a
  * larger `ArrayBuffer` will not be copied.
  */
-export function hardClone<T extends arrow.DataType>(
-  input: arrow.Data<T>,
+export function hardClone<T extends DataType>(
+  input: Data<T>,
   force?: boolean,
-): arrow.Data<T>;
-export function hardClone<T extends arrow.DataType>(
-  input: arrow.Vector<T>,
+): Data<T>;
+export function hardClone<T extends DataType>(
+  input: Vector<T>,
   force?: boolean,
-): arrow.Vector<T>;
+): Vector<T>;
 
-export function hardClone<T extends arrow.DataType>(
-  data: arrow.Data<T> | arrow.Vector<T>,
+export function hardClone<T extends DataType>(
+  data: Data<T> | Vector<T>,
   force: boolean = false,
-): arrow.Data<T> | arrow.Vector<T> {
+): Data<T> | Vector<T> {
   // Check if `data` is an arrow.Vector
   if ("data" in data) {
-    return new arrow.Vector(data.data.map((data) => hardClone(data, force)));
+    return new Vector(data.data.map((data) => hardClone(data, force)));
   }
 
   // Clone each of the children, recursively
-  const clonedChildren: arrow.Data[] = [];
+  const clonedChildren: Data[] = [];
   for (const childData of data.children) {
     clonedChildren.push(hardClone(childData, force));
   }
 
   // Clone the dictionary if there is one
-  let clonedDictionary: arrow.Vector | undefined = undefined;
+  let clonedDictionary: Vector | undefined = undefined;
   if (data.dictionary !== undefined) {
     clonedDictionary = hardClone(data.dictionary, force);
   }
@@ -66,29 +69,20 @@ export function hardClone<T extends arrow.DataType>(
   //   are non-null/valid.
   // - TYPE: type ids for a union type.
   const clonedBuffers: Buffers<T> = {
-    [arrow.BufferType.OFFSET]: cloneBuffer(
-      data.buffers[arrow.BufferType.OFFSET],
+    [BufferType.OFFSET]: cloneBuffer(data.buffers[BufferType.OFFSET], force),
+    [BufferType.DATA]: cloneBuffer(data.buffers[BufferType.DATA], force),
+    [BufferType.VALIDITY]: cloneBuffer(
+      data.buffers[BufferType.VALIDITY],
       force,
     ),
-    [arrow.BufferType.DATA]: cloneBuffer(
-      data.buffers[arrow.BufferType.DATA],
-      force,
-    ),
-    [arrow.BufferType.VALIDITY]: cloneBuffer(
-      data.buffers[arrow.BufferType.VALIDITY],
-      force,
-    ),
-    [arrow.BufferType.TYPE]: cloneBuffer(
-      data.buffers[arrow.BufferType.TYPE],
-      force,
-    ),
+    [BufferType.TYPE]: cloneBuffer(data.buffers[BufferType.TYPE], force),
   };
 
   // Note: the data.offset is passed on so that a sliced Data instance will not
   // be "un-sliced". However keep in mind that this means we're cloning the
   // _original backing buffer_, not only the portion of the Data that was
   // sliced.
-  return new arrow.Data(
+  return new Data(
     data.type,
     data.offset,
     data.length,
@@ -102,10 +96,10 @@ export function hardClone<T extends arrow.DataType>(
 }
 
 /**
- * Test whether an arrow.Data instance is a slice of a larger `ArrayBuffer`.
+ * Test whether an Data instance is a slice of a larger `ArrayBuffer`.
  */
-export function isShared<T extends arrow.DataType>(
-  data: arrow.Data<T> | arrow.Vector<T>,
+export function isShared<T extends DataType>(
+  data: Data<T> | Vector<T>,
 ): boolean {
   // Loop over arrow.Vector
   if ("data" in data) {
@@ -127,10 +121,10 @@ export function isShared<T extends arrow.DataType>(
   }
 
   const bufferTypes = [
-    arrow.BufferType.OFFSET,
-    arrow.BufferType.DATA,
-    arrow.BufferType.VALIDITY,
-    arrow.BufferType.TYPE,
+    BufferType.OFFSET,
+    BufferType.DATA,
+    BufferType.VALIDITY,
+    BufferType.TYPE,
   ];
   for (const bufferType of bufferTypes) {
     if (

@@ -1,32 +1,35 @@
-import * as arrow from "apache-arrow";
+import { DataType } from "apache-arrow/type";
+import { BufferType, Type } from "apache-arrow/enum";
+import { Data } from "apache-arrow/data";
+import { Vector } from "apache-arrow/vector";
 import { hardClone } from "./hard-clone";
 
 /**
  * Prepare a `Data` or `Vector` for a `postMessage` or `structuredClone`.
  */
-export function preparePostMessage<T extends arrow.DataType>(
-  input: arrow.Data<T>,
+export function preparePostMessage<T extends DataType>(
+  input: Data<T>,
   forceClone?: boolean,
-): [arrow.Data<T>, ArrayBuffer[]];
-export function preparePostMessage<T extends arrow.DataType>(
-  input: arrow.Vector<T>,
+): [Data<T>, ArrayBuffer[]];
+export function preparePostMessage<T extends DataType>(
+  input: Vector<T>,
   forceClone?: boolean,
-): [arrow.Vector<T>, ArrayBuffer[]];
+): [Vector<T>, ArrayBuffer[]];
 
-export function preparePostMessage<T extends arrow.DataType>(
-  input: arrow.Data<T> | arrow.Vector<T>,
+export function preparePostMessage<T extends DataType>(
+  input: Data<T> | Vector<T>,
   forceClone: boolean = false,
-): [arrow.Data<T> | arrow.Vector<T>, ArrayBuffer[]] {
+): [Data<T> | Vector<T>, ArrayBuffer[]] {
   // Check if `input` is an arrow.Vector
   if ("data" in input) {
-    const postMessageDatas: arrow.Data<T>[] = [];
+    const postMessageDatas: Data<T>[] = [];
     const transferArrayBuffers: ArrayBuffer[] = [];
     for (const data of input.data) {
       const [postMessageData, arrayBuffers] = preparePostMessage(data);
       postMessageDatas.push(postMessageData);
       transferArrayBuffers.push(...arrayBuffers);
     }
-    const vector = new arrow.Vector(postMessageDatas);
+    const vector = new Vector(postMessageDatas);
     assignTypeIdOnType(vector.type);
     return [vector, transferArrayBuffers];
   }
@@ -58,17 +61,17 @@ export function preparePostMessage<T extends arrow.DataType>(
 
   // We don't use a loop over these four to ensure accurate typing (well, typing
   // doesn't seem to work on `DATA` and `TYPE`.)
-  if (input.buffers[arrow.BufferType.OFFSET] !== undefined) {
-    transferArrayBuffers.push(input.buffers[arrow.BufferType.OFFSET].buffer);
+  if (input.buffers[BufferType.OFFSET] !== undefined) {
+    transferArrayBuffers.push(input.buffers[BufferType.OFFSET].buffer);
   }
-  if (input.buffers[arrow.BufferType.DATA] !== undefined) {
-    transferArrayBuffers.push(input.buffers[arrow.BufferType.DATA].buffer);
+  if (input.buffers[BufferType.DATA] !== undefined) {
+    transferArrayBuffers.push(input.buffers[BufferType.DATA].buffer);
   }
-  if (input.buffers[arrow.BufferType.VALIDITY] !== undefined) {
-    transferArrayBuffers.push(input.buffers[arrow.BufferType.VALIDITY].buffer);
+  if (input.buffers[BufferType.VALIDITY] !== undefined) {
+    transferArrayBuffers.push(input.buffers[BufferType.VALIDITY].buffer);
   }
-  if (input.buffers[arrow.BufferType.TYPE] !== undefined) {
-    transferArrayBuffers.push(input.buffers[arrow.BufferType.TYPE].buffer);
+  if (input.buffers[BufferType.TYPE] !== undefined) {
+    transferArrayBuffers.push(input.buffers[BufferType.TYPE].buffer);
   }
 
   assignTypeIdOnType(input.type);
@@ -76,9 +79,7 @@ export function preparePostMessage<T extends arrow.DataType>(
   return [input, transferArrayBuffers];
 }
 
-function assignTypeIdOnType<T extends arrow.Type>(
-  type: arrow.DataType<T>,
-): void {
+function assignTypeIdOnType<T extends Type>(type: DataType<T>): void {
   // @ts-expect-error __type does not exist
   type.__type = type.typeId;
 

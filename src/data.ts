@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Data } from "apache-arrow/data";
 import {
   Point,
   LineString,
@@ -12,14 +12,14 @@ import {
   isMultiPoint,
   isMultiLineString,
   isMultiPolygon,
-} from "./type.js";
+} from "./type";
 
-export type PointData = arrow.Data<Point>;
-export type LineStringData = arrow.Data<LineString>;
-export type PolygonData = arrow.Data<Polygon>;
-export type MultiPointData = arrow.Data<MultiPoint>;
-export type MultiLineStringData = arrow.Data<MultiLineString>;
-export type MultiPolygonData = arrow.Data<MultiPolygon>;
+export type PointData = Data<Point>;
+export type LineStringData = Data<LineString>;
+export type PolygonData = Data<Polygon>;
+export type MultiPointData = Data<MultiPoint>;
+export type MultiLineStringData = Data<MultiLineString>;
+export type MultiPolygonData = Data<MultiPolygon>;
 export type GeoArrowData =
   | PointData
   | LineStringData
@@ -28,28 +28,26 @@ export type GeoArrowData =
   | MultiLineStringData
   | MultiPolygonData;
 
-export function isPointData(data: arrow.Data): data is PointData {
+export function isPointData(data: Data): data is PointData {
   return isPoint(data.type);
 }
 
-export function isLineStringData(data: arrow.Data): data is LineStringData {
+export function isLineStringData(data: Data): data is LineStringData {
   return isLineString(data.type);
 }
 
-export function isPolygonData(data: arrow.Data): data is PolygonData {
+export function isPolygonData(data: Data): data is PolygonData {
   return isPolygon(data.type);
 }
 
-export function isMultiPointData(data: arrow.Data): data is MultiPointData {
+export function isMultiPointData(data: Data): data is MultiPointData {
   return isMultiPoint(data.type);
 }
 
-export function isMultiLineStringData(
-  data: arrow.Data,
-): data is MultiLineStringData {
+export function isMultiLineStringData(data: Data): data is MultiLineStringData {
   return isMultiLineString(data.type);
 }
 
-export function isMultiPolygonData(data: arrow.Data): data is MultiPolygonData {
+export function isMultiPolygonData(data: Data): data is MultiPolygonData {
   return isMultiPolygon(data.type);
 }

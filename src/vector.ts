@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Vector } from "apache-arrow/vector";
 import {
   Point,
   LineString,
@@ -12,14 +12,14 @@ import {
   isMultiPoint,
   isMultiLineString,
   isMultiPolygon,
-} from "./type.js";
+} from "./type";
 
-export type PointVector = arrow.Vector<Point>;
-export type LineStringVector = arrow.Vector<LineString>;
-export type PolygonVector = arrow.Vector<Polygon>;
-export type MultiPointVector = arrow.Vector<MultiPoint>;
-export type MultiLineStringVector = arrow.Vector<MultiLineString>;
-export type MultiPolygonVector = arrow.Vector<MultiPolygon>;
+export type PointVector = Vector<Point>;
+export type LineStringVector = Vector<LineString>;
+export type PolygonVector = Vector<Polygon>;
+export type MultiPointVector = Vector<MultiPoint>;
+export type MultiLineStringVector = Vector<MultiLineString>;
+export type MultiPolygonVector = Vector<MultiPolygon>;
 export type GeoArrowVector =
   | PointVector
   | LineStringVector
@@ -28,34 +28,30 @@ export type GeoArrowVector =
   | MultiLineStringVector
   | MultiPolygonVector;
 
-export function isPointVector(vector: arrow.Vector): vector is PointVector {
+export function isPointVector(vector: Vector): vector is PointVector {
   return isPoint(vector.type);
 }
 
-export function isLineStringVector(
-  vector: arrow.Vector,
-): vector is LineStringVector {
+export function isLineStringVector(vector: Vector): vector is LineStringVector {
   return isLineString(vector.type);
 }
 
-export function isPolygonVector(vector: arrow.Vector): vector is PolygonVector {
+export function isPolygonVector(vector: Vector): vector is PolygonVector {
   return isPolygon(vector.type);
 }
 
-export function isMultiPointVector(
-  vector: arrow.Vector,
-): vector is MultiPointVector {
+export function isMultiPointVector(vector: Vector): vector is MultiPointVector {
   return isMultiPoint(vector.type);
 }
 
 export function isMultiLineStringVector(
-  vector: arrow.Vector,
+  vector: Vector,
 ): vector is MultiLineStringVector {
   return isMultiLineString(vector.type);
 }
 
 export function isMultiPolygonVector(
-  vector: arrow.Vector,
+  vector: Vector,
 ): vector is MultiPolygonVector {
   return isMultiPolygon(vector.type);
 }
