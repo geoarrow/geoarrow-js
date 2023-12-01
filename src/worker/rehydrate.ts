@@ -174,7 +174,7 @@ export function rehydrateData<T extends DataType>(
   };
 
   // @ts-expect-error
-  return new arrow.Data(
+  return new Data(
     rehydrateType(data.type),
     data.offset,
     data.length,
