@@ -1,6 +1,6 @@
 {
   "name": "@geoarrow/geoarrow-js",
-  "version": "0.2.0",
+  "version": "0.3.0-beta.1",
   "description": "TypeScript implementation of GeoArrow",
   "source": "src/index.ts",
   "umd:main": "dist/geoarrow.umd.js",
@@ -26,7 +26,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "build:rollup": "rollup -c rollup.config.js",
+    "build:workers": "node ./worker-build.mjs",
+    "build": "yarn build:rollup && yarn build:workers",
     "clean": "rimraf dist",
     "docs:build": "typedoc",
     "docs:publish": "gh-pages -d docs_build",
@@ -50,6 +52,7 @@
     "@types/node": "^20.9.3",
     "@types/proj4": "^2",
     "apache-arrow": "^14",
+    "esbuild": "^0.19.8",
     "gh-pages": "^6.1.0",
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
@@ -66,6 +69,7 @@
   },
   "dependencies": {
     "@math.gl/polygon": "^4.0.0",
-    "proj4": "^2.9.2"
+    "proj4": "^2.9.2",
+    "threads": "^1.7.0"
   }
 }

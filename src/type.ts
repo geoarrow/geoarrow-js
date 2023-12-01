@@ -1,21 +1,27 @@
-import * as arrow from "apache-arrow";
+import {
+  Struct,
+  Float,
+  List,
+  FixedSizeList,
+  DataType,
+} from "apache-arrow/type";
 
 // Note: this apparently has to be arrow.Float and not arrow.Float64 to ensure
 // that recreating a data instance with arrow.makeData type checks using the
 // input's data type.
-export type InterleavedCoord = arrow.FixedSizeList<arrow.Float>;
-export type SeparatedCoord = arrow.Struct<{
-  x: arrow.Float;
-  y: arrow.Float;
+export type InterleavedCoord = FixedSizeList<Float>;
+export type SeparatedCoord = Struct<{
+  x: Float;
+  y: Float;
 }>;
 // TODO: support separated coords
 export type Coord = InterleavedCoord; // | SeparatedCoord;
 export type Point = Coord;
-export type LineString = arrow.List<Coord>;
-export type Polygon = arrow.List<arrow.List<Coord>>;
-export type MultiPoint = arrow.List<Coord>;
-export type MultiLineString = arrow.List<arrow.List<Coord>>;
-export type MultiPolygon = arrow.List<arrow.List<arrow.List<Coord>>>;
+export type LineString = List<Coord>;
+export type Polygon = List<List<Coord>>;
+export type MultiPoint = List<Coord>;
+export type MultiLineString = List<List<Coord>>;
+export type MultiPolygon = List<List<List<Coord>>>;
 export type GeoArrowType =
   | Point
   | LineString
@@ -25,22 +31,22 @@ export type GeoArrowType =
   | MultiPolygon;
 
 /** Check that the given type is a Point data type */
-export function isPoint(type: arrow.DataType): type is Point {
-  if (arrow.DataType.isFixedSizeList(type)) {
+export function isPoint(type: DataType): type is Point {
+  if (DataType.isFixedSizeList(type)) {
     // Check list size
     if (![2, 3, 4].includes(type.listSize)) {
       return false;
     }
 
     // Check child of FixedSizeList is floating type
-    if (!arrow.DataType.isFloat(type.children[0])) {
+    if (!DataType.isFloat(type.children[0])) {
       return false;
     }
 
     return true;
   }
 
-  if (arrow.DataType.isStruct(type)) {
+  if (DataType.isStruct(type)) {
     // Check number of children
     if (![2, 3, 4].includes(type.children.length)) {
       return false;
@@ -53,7 +59,7 @@ export function isPoint(type: arrow.DataType): type is Point {
       return false;
     }
 
-    if (!type.children.every((field) => arrow.DataType.isFloat(field))) {
+    if (!type.children.every((field) => DataType.isFloat(field))) {
       return false;
     }
 
@@ -63,9 +69,9 @@ export function isPoint(type: arrow.DataType): type is Point {
   return false;
 }
 
-export function isLineString(type: arrow.DataType): type is LineString {
+export function isLineString(type: DataType): type is LineString {
   // Check the outer type is a List
-  if (!arrow.DataType.isList(type)) {
+  if (!DataType.isList(type)) {
     return false;
   }
 
@@ -77,9 +83,9 @@ export function isLineString(type: arrow.DataType): type is LineString {
   return true;
 }
 
-export function isPolygon(type: arrow.DataType): type is Polygon {
+export function isPolygon(type: DataType): type is Polygon {
   // Check the outer vector is a List
-  if (!arrow.DataType.isList(type)) {
+  if (!DataType.isList(type)) {
     return false;
   }
 
@@ -91,9 +97,9 @@ export function isPolygon(type: arrow.DataType): type is Polygon {
   return true;
 }
 
-export function isMultiPoint(type: arrow.DataType): type is MultiPoint {
+export function isMultiPoint(type: DataType): type is MultiPoint {
   // Check the outer vector is a List
-  if (!arrow.DataType.isList(type)) {
+  if (!DataType.isList(type)) {
     return false;
   }
 
@@ -105,11 +111,9 @@ export function isMultiPoint(type: arrow.DataType): type is MultiPoint {
   return true;
 }
 
-export function isMultiLineString(
-  type: arrow.DataType,
-): type is MultiLineString {
+export function isMultiLineString(type: DataType): type is MultiLineString {
   // Check the outer vector is a List
-  if (!arrow.DataType.isList(type)) {
+  if (!DataType.isList(type)) {
     return false;
   }
 
@@ -121,9 +125,9 @@ export function isMultiLineString(
   return true;
 }
 
-export function isMultiPolygon(type: arrow.DataType): type is MultiPolygon {
+export function isMultiPolygon(type: DataType): type is MultiPolygon {
   // Check the outer vector is a List
-  if (!arrow.DataType.isList(type)) {
+  if (!DataType.isList(type)) {
     return false;
   }
 
