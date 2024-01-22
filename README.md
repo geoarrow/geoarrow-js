@@ -29,7 +29,7 @@ Refer to the [`algorithm` namespace](https://geoarrow.github.io/geoarrow-js/modu
 
 ## Web Worker utilities
 
-Refer to the [`worker` namespace](https://geoarrow.github.io/geoarrow-js/modules/worker.html). Note that due to limitations in Arrow JS (as of v14) you **must** use `preparePostMessage` before a call to `structuredClone` or `postMessage`, to ensure it can correctly be rehydrated on the worker.
+Refer to the [`worker` namespace](https://geoarrow.github.io/geoarrow-js/modules/worker.html). Use `preparePostMessage` to obtain references to all underlying `ArrayBuffer` objects, so they can be transfered instead of copied.
 
 ```ts
 import * as arrow from "apache-arrow";

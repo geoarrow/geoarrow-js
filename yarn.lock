@@ -378,7 +378,7 @@ __metadata:
     "@rollup/plugin-typescript": "npm:^11.1.2"
     "@types/node": "npm:^20.9.3"
     "@types/proj4": "npm:^2"
-    apache-arrow: "npm:^14"
+    apache-arrow: "npm:^15"
     esbuild: "npm:^0.19.8"
     gh-pages: "npm:^6.1.0"
     prettier: "npm:^3.1.0"
@@ -392,7 +392,7 @@ __metadata:
     typescript: "npm:^5.2.2"
     vitest: "npm:^0.34.6"
   peerDependencies:
-    apache-arrow: ">=14"
+    apache-arrow: ">=15"
   languageName: unknown
   linkType: soft
 
@@ -678,6 +678,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/helpers@npm:^0.5.2":
+  version: 0.5.3
+  resolution: "@swc/helpers@npm:0.5.3"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 5ed4329cd36106e4c3c9c9fa710fae5b80521accce697d81030c42798c4653237f719269c24c26adf42579e15e1f720f31cd63983dea30debd298582a6cbd20a
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.9
   resolution: "@tsconfig/node10@npm:1.0.9"
@@ -722,17 +731,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/command-line-args@npm:5.2.0":
-  version: 5.2.0
-  resolution: "@types/command-line-args@npm:5.2.0"
-  checksum: 423121d2d083765f5b78d090115f3be82d53a39cec9de63719cbd07021e6330fab19b75e2290af1f7dda84efd7964dc498eb10b2b465991de27045db95aa1eef
+"@types/command-line-args@npm:^5.2.1":
+  version: 5.2.3
+  resolution: "@types/command-line-args@npm:5.2.3"
+  checksum: 3d90db5b4bbaabd049654a0d12fa378989ab0d76a0f98d4c606761b5a08ce76458df0f9bb175219e187b4cd57e285e6f836d23e86b2c3d997820854cc3ed9121
   languageName: node
   linkType: hard
 
-"@types/command-line-usage@npm:5.0.2":
-  version: 5.0.2
-  resolution: "@types/command-line-usage@npm:5.0.2"
-  checksum: 9c0eabf5e86a405d118dcfb5f4bceae43080efe603a0f240664716a05283dcb389e94e999188d12b10a0aa4452a920445131f1011e7484403f146607cd2577f0
+"@types/command-line-usage@npm:^5.0.2":
+  version: 5.0.4
+  resolution: "@types/command-line-usage@npm:5.0.4"
+  checksum: 7173c356ca8c9507feeeda8e660c52498929556e90be0cf2d09d35270c597481121cd0f006a74167c5577feebfbc75b648c0f8f01b8f06ce30bde9fe30d5ba40
   languageName: node
   linkType: hard
 
@@ -752,17 +761,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.3.0":
-  version: 20.3.0
-  resolution: "@types/node@npm:20.3.0"
-  checksum: c1fdc2d64313f53fbd0d2d4172e61b2e088c4474c2d33f448cbda54948bc52f56b0fb78d39f958d4add630cd91d03bee292a34615e94a05251b7a4cb335899de
-  languageName: node
-  linkType: hard
-
-"@types/pad-left@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@types/pad-left@npm:2.1.1"
-  checksum: db0191e39af416e5eca02f22424306a13b1bf24abb00873bbbb8c28de5085764ff1243c32548580260952588fbef6d9a5a34106276013420bcc79f538f4e8cc2
+"@types/node@npm:^20.6.0":
+  version: 20.11.5
+  resolution: "@types/node@npm:20.11.5"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 9f31c471047d7b3e240ce7b77ff29b0d15e83be7e3feafb3d0b0d0931122b438b1eefa302a5a2e1e9849914ff3fd76aafbd8ccb372efb1331ba048da63bce6f8
   languageName: node
   linkType: hard
 
@@ -921,23 +925,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apache-arrow@npm:^14":
-  version: 14.0.1
-  resolution: "apache-arrow@npm:14.0.1"
+"apache-arrow@npm:^15":
+  version: 15.0.0
+  resolution: "apache-arrow@npm:15.0.0"
   dependencies:
-    "@types/command-line-args": "npm:5.2.0"
-    "@types/command-line-usage": "npm:5.0.2"
-    "@types/node": "npm:20.3.0"
-    "@types/pad-left": "npm:2.1.1"
-    command-line-args: "npm:5.2.1"
-    command-line-usage: "npm:7.0.1"
-    flatbuffers: "npm:23.5.26"
+    "@swc/helpers": "npm:^0.5.2"
+    "@types/command-line-args": "npm:^5.2.1"
+    "@types/command-line-usage": "npm:^5.0.2"
+    "@types/node": "npm:^20.6.0"
+    command-line-args: "npm:^5.2.1"
+    command-line-usage: "npm:^7.0.1"
+    flatbuffers: "npm:^23.5.26"
     json-bignum: "npm:^0.0.3"
-    pad-left: "npm:^2.1.0"
-    tslib: "npm:^2.5.3"
+    tslib: "npm:^2.6.2"
   bin:
-    arrow2csv: bin/arrow2csv.js
-  checksum: 09c31f00354de413b3b6961a6cb2848fe744407477ed3fc1461c1e5fbb55183662a711d4755266a3599b2ca3531f2801b94be93ebde5f8c9cbf084f6bcf7de4e
+    arrow2csv: bin/arrow2csv.cjs
+  checksum: aff749aec1e0eddfce30e7da6b7f417a6d152b6c34b551a687828a9ee742f52294fc76e7b276e2c3e2374de9bd850f5f1b72c108f6f496e7b25b059389f22585
   languageName: node
   linkType: hard
 
@@ -1159,7 +1162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"command-line-args@npm:5.2.1, command-line-args@npm:^5.2.1":
+"command-line-args@npm:^5.2.1":
   version: 5.2.1
   resolution: "command-line-args@npm:5.2.1"
   dependencies:
@@ -1171,7 +1174,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"command-line-usage@npm:7.0.1, command-line-usage@npm:^7.0.0":
+"command-line-usage@npm:^7.0.0, command-line-usage@npm:^7.0.1":
   version: 7.0.1
   resolution: "command-line-usage@npm:7.0.1"
   dependencies:
@@ -1545,7 +1548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatbuffers@npm:23.5.26":
+"flatbuffers@npm:^23.5.26":
   version: 23.5.26
   resolution: "flatbuffers@npm:23.5.26"
   checksum: f4add4f11414d3bef3a6e10525709c1766cbe3084c59e1cd98d871bde89eaf1c076ccc55913efc6125bdd6558d254a0d28adb73b544c79a69f961ba89bd1833f
@@ -2251,15 +2254,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pad-left@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "pad-left@npm:2.1.0"
-  dependencies:
-    repeat-string: "npm:^1.5.4"
-  checksum: 571cb662aaec902a462b8809d54e38aa09f07bbf85359af50ca5c96b49546103473ba1d056fc5b5f9611b7472e40fca901486f209d1498f214e74abefabdd016
-  languageName: node
-  linkType: hard
-
 "path-exists@npm:^4.0.0":
   version: 4.0.0
   resolution: "path-exists@npm:4.0.0"
@@ -2447,13 +2441,6 @@ __metadata:
   version: 0.14.0
   resolution: "regenerator-runtime@npm:0.14.0"
   checksum: 6c19495baefcf5fbb18a281b56a97f0197b5f219f42e571e80877f095320afac0bdb31dab8f8186858e6126950068c3f17a1226437881e3e70446ea66751897c
-  languageName: node
-  linkType: hard
-
-"repeat-string@npm:^1.5.4":
-  version: 1.6.1
-  resolution: "repeat-string@npm:1.6.1"
-  checksum: 1b809fc6db97decdc68f5b12c4d1a671c8e3f65ec4a40c238bc5200e44e85bcc52a54f78268ab9c29fcf5fe4f1343e805420056d1f30fa9a9ee4c2d93e3cc6c0
   languageName: node
   linkType: hard
 
@@ -2962,7 +2949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.5.3":
+"tslib@npm:^2.4.0, tslib@npm:^2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
