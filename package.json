@@ -44,14 +44,14 @@
     "src/"
   ],
   "peerDependencies": {
-    "apache-arrow": ">=14"
+    "apache-arrow": ">=15"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.9.3",
     "@types/proj4": "^2",
-    "apache-arrow": "^14",
+    "apache-arrow": "^15",
     "esbuild": "^0.19.8",
     "gh-pages": "^6.1.0",
     "prettier": "^3.1.0",

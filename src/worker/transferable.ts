@@ -1,5 +1,5 @@
 import { DataType } from "apache-arrow/type";
-import { BufferType, Type } from "apache-arrow/enum";
+import { BufferType } from "apache-arrow/enum";
 import { Data } from "apache-arrow/data";
 import { Vector } from "apache-arrow/vector";
 import { hardClone } from "./hard-clone";
@@ -30,7 +30,6 @@ export function preparePostMessage<T extends DataType>(
       transferArrayBuffers.push(...arrayBuffers);
     }
     const vector = new Vector(postMessageDatas);
-    assignTypeIdOnType(vector.type);
     return [vector, transferArrayBuffers];
   }
 
@@ -74,18 +73,5 @@ export function preparePostMessage<T extends DataType>(
     transferArrayBuffers.push(input.buffers[BufferType.TYPE].buffer);
   }
 
-  assignTypeIdOnType(input.type);
-
   return [input, transferArrayBuffers];
-}
-
-function assignTypeIdOnType<T extends Type>(type: DataType<T>): void {
-  // @ts-expect-error __type does not exist
-  type.__type = type.typeId;
-
-  if (type.children && type.children.length > 0) {
-    for (const child of type.children) {
-      assignTypeIdOnType(child.type);
-    }
-  }
 }
