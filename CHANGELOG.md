@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0] - 2024-01-22
+
+- earcut worker by @kylebarron in https://github.com/geoarrow/geoarrow-js/pull/20
+- Bump to apache-arrow 15 and simplify worker utils by @kylebarron in https://github.com/geoarrow/geoarrow-js/pull/22
+
+**Full Changelog**: https://github.com/geoarrow/geoarrow-js/compare/v0.2.0...v0.3.0
+
 ## [0.2.0] - 2023-11-30
 
 - Get the exterior of a Polygon or MultiPolygon https://github.com/geoarrow/geoarrow-js/pull/14
