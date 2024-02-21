@@ -33,23 +33,16 @@ Refer to the [`worker` namespace](https://geoarrow.github.io/geoarrow-js/modules
 
 ```ts
 import * as arrow from "apache-arrow";
-import {
-  worker
-} from "@geoarrow/geoarrow-js";
-
-const {
-  preparePostMessage,
-  rehydrateVector
-} = worker;
+import { worker } from "@geoarrow/geoarrow-js";
 
 const originalVector = arrow.makeVector(new Int32Array([1, 2, 3]));
-const [preparedVector, arrayBuffers] = preparePostMessage(originalVector);
+const [preparedVector, arrayBuffers] = worker.preparePostMessage(originalVector);
 
 // Here we use structuredClone to simulate a postMessage but on the main thread
 const receivedVector = structuredClone(preparedVector, {
   transfer: arrayBuffers,
 });
-const rehydratedVector = rehydrateVector(receivedVector);
+const rehydratedVector = worker.rehydrateVector(receivedVector);
 ```
 
 ## Ecosystem
