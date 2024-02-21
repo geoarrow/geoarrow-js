@@ -34,9 +34,13 @@ Refer to the [`worker` namespace](https://geoarrow.github.io/geoarrow-js/modules
 ```ts
 import * as arrow from "apache-arrow";
 import {
+  worker
+} from "@geoarrow/geoarrow-js";
+
+const {
   preparePostMessage,
-  rehydrateVector,
-} from "@geoarrow/geoarrow-js/worker";
+  rehydrateVector
+} = worker;
 
 const originalVector = arrow.makeVector(new Int32Array([1, 2, 3]));
 const [preparedVector, arrayBuffers] = preparePostMessage(originalVector);
