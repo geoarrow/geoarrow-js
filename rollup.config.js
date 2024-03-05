@@ -1,6 +1,7 @@
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 const input = "./src/index.ts";
 const sourcemap = true;
@@ -14,7 +15,7 @@ export default [
       format: "es",
       sourcemap,
     },
-    plugins: [typescript()],
+    plugins: [nodeResolve(), typescript()],
     external,
   },
   {
@@ -33,7 +34,7 @@ export default [
       format: "cjs",
       sourcemap,
     },
-    plugins: [typescript()],
+    plugins: [nodeResolve(), typescript()],
     external,
   },
   {
@@ -41,10 +42,13 @@ export default [
     output: {
       file: "dist/geoarrow.umd.js",
       format: "umd",
-      name: "@geoarrow/geoarrow-js",
+      name: "geoarrow",
       sourcemap,
+      globals: {
+        "apache-arrow": "arrow",
+      },
     },
-    plugins: [typescript(), terser()],
+    plugins: [nodeResolve(), typescript(), terser()],
     external,
   },
 ];
