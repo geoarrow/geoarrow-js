@@ -45,7 +45,7 @@ export default [
       name: "geoarrow",
       sourcemap,
       globals: {
-        "apache-arrow": "arrow",
+        "apache-arrow": "Arrow",
       },
     },
     plugins: [nodeResolve(), typescript(), terser()],
