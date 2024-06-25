@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1] - 2024-06-25
+
+- Fix bundling by @kylebarron in https://github.com/geoarrow/geoarrow-js/pull/26
+
+**Full Changelog**: https://github.com/geoarrow/geoarrow-js/compare/v0.3.0...v0.3.1
+
 ## [0.3.0] - 2024-01-22
 
 - earcut worker by @kylebarron in https://github.com/geoarrow/geoarrow-js/pull/20
