@@ -4,3 +4,4 @@ export * as data from "./data.js";
 export * as type from "./type.js";
 export * as vector from "./vector.js";
 export * as worker from "./worker";
+export * as io from "./io";
