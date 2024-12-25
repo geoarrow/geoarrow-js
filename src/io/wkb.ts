@@ -205,9 +205,8 @@ function repackPolygons(
       ringIdx++
     ) {
       ringOffsets[ringOffset + 1] =
-        (geom.primitivePolygonIndices.value[ringOffset + 1] -
-          geom.primitivePolygonIndices.value[ringOffset]) /
-        geom.positions.size;
+          ringOffsets[ringOffset] + (geom.primitivePolygonIndices.value[ringIdx + 1] -
+          geom.primitivePolygonIndices.value[ringIdx]);
       ringOffset += 1;
     }
 
