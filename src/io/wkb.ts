@@ -17,7 +17,6 @@ import { assert, assertFalse } from "../algorithm/utils/assert";
 import { FixedSizeList, Float64, List } from "apache-arrow/type";
 import { Field } from "apache-arrow/schema";
 
-
 export enum WKBType {
   Point,
   LineString,
@@ -38,7 +37,6 @@ export function parseWkb(
   dim: number,
 ): GeoArrowData {
   const parsedGeometries: BinaryGeometry[] = [];
-
 
   for (const item of iterBinary(data)) {
     if (item === null) {
@@ -205,7 +203,8 @@ function repackPolygons(
       ringIdx++
     ) {
       ringOffsets[ringOffset + 1] =
-          ringOffsets[ringOffset] + (geom.primitivePolygonIndices.value[ringIdx + 1] -
+        ringOffsets[ringOffset] +
+        (geom.primitivePolygonIndices.value[ringIdx + 1] -
           geom.primitivePolygonIndices.value[ringIdx]);
       ringOffset += 1;
     }
