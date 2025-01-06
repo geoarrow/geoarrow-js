@@ -59,19 +59,16 @@ export function preparePostMessage<T extends DataType>(
   // We don't use a loop over these four to ensure accurate typing (well, typing
   // doesn't seem to work on `DATA` and `TYPE`.)
   if (input.buffers[BufferType.OFFSET] !== undefined) {
-    // @ts-expect-error
     transferArrayBuffers.push(input.buffers[BufferType.OFFSET].buffer);
   }
 
   if (input.buffers[BufferType.DATA] !== undefined) {
-    // @ts-expect-error
     transferArrayBuffers.push(input.buffers[BufferType.DATA].buffer);
   }
   if (input.buffers[BufferType.VALIDITY] !== undefined) {
     transferArrayBuffers.push(input.buffers[BufferType.VALIDITY].buffer);
   }
   if (input.buffers[BufferType.TYPE] !== undefined) {
-    // @ts-expect-error
     transferArrayBuffers.push(input.buffers[BufferType.TYPE].buffer);
   }
 
