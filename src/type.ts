@@ -1,5 +1,5 @@
 import {
-  Binary,
+  type Binary,
   type Struct,
   type Float,
   type List,
