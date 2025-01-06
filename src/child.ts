@@ -2,8 +2,7 @@
  * Strongly typed accessors for children, since arrow.Data.children[] is untyped
  */
 
-import { Data, Vector } from "apache-arrow";
-import { Float } from "apache-arrow/type";
+import { Data, Vector, type Float } from "apache-arrow";
 import {
   LineStringData,
   MultiLineStringData,

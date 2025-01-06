@@ -1,5 +1,9 @@
 import {
-  DataType,
+  BufferType,
+  Type,
+  Data,
+  Vector,
+  Field,
   Null,
   Int,
   Float,
@@ -18,8 +22,8 @@ import {
   FixedSizeList,
   Map_,
   Duration,
-} from "apache-arrow/type";
-import { BufferType, Type, Data, Vector, Field } from "apache-arrow";
+  type DataType,
+} from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
 import { Polygon, isPolygon } from "../type";
 import { PolygonData } from "../data";

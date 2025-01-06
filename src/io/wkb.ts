@@ -1,5 +1,4 @@
-import { makeData, Field } from "apache-arrow";
-import { FixedSizeList, Float64, List } from "apache-arrow/type";
+import { makeData, Field, FixedSizeList, Float64, List } from "apache-arrow";
 import {
   GeoArrowData,
   LineStringData,
