@@ -1,4 +1,4 @@
-import { Vector } from "apache-arrow/vector";
+import { Vector } from "apache-arrow";
 import {
   Point,
   LineString,

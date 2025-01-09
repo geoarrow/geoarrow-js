@@ -1,4 +1,4 @@
-import { makeData } from "apache-arrow/data";
+import { makeData, Field, FixedSizeList, Float64, List } from "apache-arrow";
 import {
   GeoArrowData,
   LineStringData,
@@ -14,8 +14,6 @@ import type {
   BinaryPolygonGeometry,
 } from "@loaders.gl/schema";
 import { assert, assertFalse } from "../algorithm/utils/assert";
-import { FixedSizeList, Float64, List } from "apache-arrow/type";
-import { Field } from "apache-arrow/schema";
 
 export enum WKBType {
   Point,

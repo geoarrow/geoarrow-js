@@ -1,4 +1,4 @@
-import { Data } from "apache-arrow/data";
+import { Data } from "apache-arrow";
 import {
   WKB,
   Point,
