@@ -1,5 +1,6 @@
-import { Data } from "apache-arrow/data";
+import { Data } from "apache-arrow";
 import {
+  WKB,
   Point,
   LineString,
   Polygon,
@@ -27,6 +28,7 @@ export type GeoArrowData =
   | MultiPointData
   | MultiLineStringData
   | MultiPolygonData;
+export type WKBData = Data<WKB>;
 
 export function isPointData(data: Data): data is PointData {
   return isPoint(data.type);

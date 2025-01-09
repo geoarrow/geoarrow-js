@@ -1,10 +1,11 @@
 import {
-  Struct,
-  Float,
-  List,
-  FixedSizeList,
+  type Binary,
+  type Struct,
+  type Float,
+  type List,
+  type FixedSizeList,
   DataType,
-} from "apache-arrow/type";
+} from "apache-arrow";
 
 // Note: this apparently has to be arrow.Float and not arrow.Float64 to ensure
 // that recreating a data instance with arrow.makeData type checks using the
@@ -29,6 +30,7 @@ export type GeoArrowType =
   | MultiPoint
   | MultiLineString
   | MultiPolygon;
+export type WKB = Binary;
 
 /** Check that the given type is a Point data type */
 export function isPoint(type: DataType): type is Point {
