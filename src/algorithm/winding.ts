@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Bool, BoolBuilder, Data, Vector } from "apache-arrow";
 import { PolygonData } from "../data";
 import { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
@@ -15,22 +15,20 @@ export enum Winding {
  * The result is a boolean Data or Vector, where `true` means **Clockwise**
  * winding order and `false` means **Counter Clockwise** winding order.
  */
-export function windingDirection(input: PolygonData): arrow.Data<arrow.Bool>;
-export function windingDirection(
-  input: PolygonVector,
-): arrow.Vector<arrow.Bool>;
+export function windingDirection(input: PolygonData): Data<Bool>;
+export function windingDirection(input: PolygonVector): Vector<Bool>;
 
 export function windingDirection(
   input: PolygonData | PolygonVector,
-): arrow.Data<arrow.Bool> | arrow.Vector<arrow.Bool> {
+): Data<Bool> | Vector<Bool> {
   if ("data" in input) {
-    return new arrow.Vector(
+    return new Vector(
       input.data.map((polygonData) => windingDirection(polygonData)),
     );
   }
 
-  let builder = new arrow.BoolBuilder({
-    type: new arrow.Bool(),
+  let builder = new BoolBuilder({
+    type: new Bool(),
     nullValues: [null],
   });
   // Force-allocate once for length of buffer

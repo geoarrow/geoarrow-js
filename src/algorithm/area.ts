@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Data, Float, makeData, Precision, Vector } from "apache-arrow";
 import { PolygonData } from "../data";
 import { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
@@ -6,14 +6,14 @@ import { makeMathGlPolygon } from "./utils/polygon";
 /**
  * Compute the unsigned area of the polygon input.
  */
-export function area(input: PolygonData): arrow.Data<arrow.Float>;
-export function area(input: PolygonVector): arrow.Vector<arrow.Float>;
+export function area(input: PolygonData): Data<Float>;
+export function area(input: PolygonVector): Vector<Float>;
 
 export function area(
   input: PolygonData | PolygonVector,
-): arrow.Data<arrow.Float> | arrow.Vector<arrow.Float> {
+): Data<Float> | Vector<Float> {
   if ("data" in input) {
-    return new arrow.Vector(input.data.map((polygonData) => area(polygonData)));
+    return new Vector(input.data.map((polygonData) => area(polygonData)));
   }
 
   const result = new Float64Array(input.length);
@@ -22,8 +22,8 @@ export function area(
     result[geomIndex] = polygon.getArea();
   }
 
-  return arrow.makeData({
-    type: new arrow.Float(arrow.Precision.DOUBLE),
+  return makeData({
+    type: new Float(Precision.DOUBLE),
     length: input.length,
     nullCount: input.nullCount,
     nullBitmap: input.nullBitmap,
@@ -34,16 +34,14 @@ export function area(
 /**
  * Compute the signed area of the polygon input.
  */
-export function signedArea(input: PolygonData): arrow.Data<arrow.Float>;
-export function signedArea(input: PolygonVector): arrow.Vector<arrow.Float>;
+export function signedArea(input: PolygonData): Data<Float>;
+export function signedArea(input: PolygonVector): Vector<Float>;
 
 export function signedArea(
   input: PolygonData | PolygonVector,
-): arrow.Data<arrow.Float> | arrow.Vector<arrow.Float> {
+): Data<Float> | Vector<Float> {
   if ("data" in input) {
-    return new arrow.Vector(
-      input.data.map((polygonData) => signedArea(polygonData)),
-    );
+    return new Vector(input.data.map((polygonData) => signedArea(polygonData)));
   }
 
   const result = new Float64Array(input.length);
@@ -52,8 +50,8 @@ export function signedArea(
     result[geomIndex] = polygon.getSignedArea();
   }
 
-  return arrow.makeData({
-    type: new arrow.Float(arrow.Precision.DOUBLE),
+  return makeData({
+    type: new Float(Precision.DOUBLE),
     length: input.length,
     nullCount: input.nullCount,
     nullBitmap: input.nullBitmap,

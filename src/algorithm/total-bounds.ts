@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Field, Vector } from "apache-arrow";
 import {
   LineStringVector,
   MultiPolygonVector,
@@ -58,7 +58,7 @@ class Bbox {
   }
 }
 
-export function totalBounds(vector: arrow.Vector, field: arrow.Field): Bbox {
+export function totalBounds(vector: Vector, field: Field): Bbox {
   switch (field.metadata.get("ARROW:extension:name")) {
     case EXTENSION_NAME.POINT:
       return totalBoundsNest0(vector);

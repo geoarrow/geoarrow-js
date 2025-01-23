@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Data, Vector } from "apache-arrow";
 import proj4 from "proj4";
 import { GeoArrowType } from "../type";
 import { mapCoords } from "./coords";
@@ -7,25 +7,25 @@ import { mapCoords } from "./coords";
  * Reproject using proj4
  */
 export function reproject<T extends GeoArrowType>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   fromProjection: string,
   toProjection: string,
-): arrow.Data<T>;
+): Data<T>;
 export function reproject<T extends GeoArrowType>(
-  input: arrow.Vector<T>,
+  input: Vector<T>,
   fromProjection: string,
   toProjection: string,
-): arrow.Vector<T>;
+): Vector<T>;
 
 export function reproject<T extends GeoArrowType>(
-  input: arrow.Data<T> | arrow.Vector<T>,
+  input: Data<T> | Vector<T>,
   fromProjection: string,
   toProjection: string,
-): arrow.Data<T> | arrow.Vector<T> {
+): Data<T> | Vector<T> {
   const projectionFn = proj4(fromProjection, toProjection);
-  // Check if an arrow.Vector
+  // Check if an Vector
   if ("data" in input) {
-    return new arrow.Vector(
+    return new Vector(
       input.data.map((data) => reprojectData(data, projectionFn)),
     );
   }
@@ -37,9 +37,9 @@ export function reproject<T extends GeoArrowType>(
  * Reproject a single Data instance
  */
 function reprojectData<T extends GeoArrowType>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   projectionFn: proj4.Converter,
-): arrow.Data<T> {
+): Data<T> {
   // Avoid extra object creation
   const stack = [0, 0];
   const callback = (x: number, y: number) => {

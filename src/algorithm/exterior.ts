@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Vector } from "apache-arrow";
 import {
   LineStringVector,
   MultiLineStringVector,
@@ -23,7 +23,7 @@ export function getPolygonExterior(
   input: PolygonVector | PolygonData,
 ): LineStringVector | LineStringData {
   if ("data" in input) {
-    return new arrow.Vector(input.data.map((data) => getPolygonExterior(data)));
+    return new Vector(input.data.map((data) => getPolygonExterior(data)));
   }
 
   return getPolygonChild(input);
@@ -43,9 +43,7 @@ export function getMultiPolygonExterior(
   input: MultiPolygonVector | MultiPolygonData,
 ): MultiLineStringVector | MultiLineStringData {
   if ("data" in input) {
-    return new arrow.Vector(
-      input.data.map((data) => getMultiPolygonExterior(data)),
-    );
+    return new Vector(input.data.map((data) => getMultiPolygonExterior(data)));
   }
 
   return getMultiPolygonChild(input);

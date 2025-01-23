@@ -1,4 +1,4 @@
-import * as arrow from "apache-arrow";
+import { Data, makeData } from "apache-arrow";
 import {
   LineString,
   MultiLineString,
@@ -86,9 +86,9 @@ export function mapCoords(
 }
 
 export function mapCoords0<T extends Point>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   callback: MapCoordsCallback,
-): arrow.Data<T> {
+): Data<T> {
   assert(input.type.listSize === 2, "expected 2D");
   const coordsData = getPointChild(input);
   const flatCoords = coordsData.values;
@@ -102,7 +102,7 @@ export function mapCoords0<T extends Point>(
     outputCoords[coordIdx * 2 + 1] = newY;
   }
 
-  const newCoordsData = arrow.makeData({
+  const newCoordsData = makeData({
     type: coordsData.type,
     length: coordsData.length,
     nullCount: coordsData.nullCount,
@@ -110,7 +110,7 @@ export function mapCoords0<T extends Point>(
     data: outputCoords,
   });
 
-  return arrow.makeData({
+  return makeData({
     type: input.type,
     length: input.length,
     nullCount: input.nullCount,
@@ -124,13 +124,13 @@ export function mapCoords0<T extends Point>(
  * into effect for operating on coords
  */
 export function mapCoords1<T extends LineString | MultiPoint>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   callback: MapCoordsCallback,
-): arrow.Data<T> {
+): Data<T> {
   const pointData = getLineStringChild(input);
   const newPointData = mapCoords0(pointData, callback);
 
-  return arrow.makeData({
+  return makeData({
     type: input.type,
     length: input.length,
     nullCount: input.nullCount,
@@ -145,13 +145,13 @@ export function mapCoords1<T extends LineString | MultiPoint>(
  * into effect for operating on coords
  */
 export function mapCoords2<T extends Polygon | MultiLineString>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   callback: MapCoordsCallback,
-): arrow.Data<T> {
+): Data<T> {
   const linestringData = getPolygonChild(input);
   const newLinestringData = mapCoords1(linestringData, callback);
 
-  return arrow.makeData({
+  return makeData({
     type: input.type,
     length: input.length,
     nullCount: input.nullCount,
@@ -166,13 +166,13 @@ export function mapCoords2<T extends Polygon | MultiLineString>(
  * into effect for operating on coords
  */
 export function mapCoords3<T extends MultiPolygon>(
-  input: arrow.Data<T>,
+  input: Data<T>,
   callback: MapCoordsCallback,
-): arrow.Data<T> {
+): Data<T> {
   const polygonData = getMultiPolygonChild(input);
   const newPolygonData = mapCoords2(polygonData, callback);
 
-  return arrow.makeData({
+  return makeData({
     type: input.type,
     length: input.length,
     nullCount: input.nullCount,

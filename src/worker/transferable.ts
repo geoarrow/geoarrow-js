@@ -58,17 +58,25 @@ export function preparePostMessage<T extends DataType>(
   // We don't use a loop over these four to ensure accurate typing (well, typing
   // doesn't seem to work on `DATA` and `TYPE`.)
   if (input.buffers[BufferType.OFFSET] !== undefined) {
-    transferArrayBuffers.push(input.buffers[BufferType.OFFSET].buffer);
+    transferArrayBuffers.push(
+      (input.buffers[BufferType.OFFSET] as Buffer).buffer,
+    );
   }
 
   if (input.buffers[BufferType.DATA] !== undefined) {
-    transferArrayBuffers.push(input.buffers[BufferType.DATA].buffer);
+    transferArrayBuffers.push(
+      (input.buffers[BufferType.DATA] as Buffer).buffer,
+    );
   }
   if (input.buffers[BufferType.VALIDITY] !== undefined) {
-    transferArrayBuffers.push(input.buffers[BufferType.VALIDITY].buffer);
+    transferArrayBuffers.push(
+      (input.buffers[BufferType.VALIDITY] as Buffer).buffer,
+    );
   }
   if (input.buffers[BufferType.TYPE] !== undefined) {
-    transferArrayBuffers.push(input.buffers[BufferType.TYPE].buffer);
+    transferArrayBuffers.push(
+      (input.buffers[BufferType.TYPE] as Buffer).buffer,
+    );
   }
 
   return [input, transferArrayBuffers];
