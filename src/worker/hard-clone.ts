@@ -1,7 +1,4 @@
-import { Data } from "apache-arrow/data";
-import { DataType } from "apache-arrow/type";
-import { Vector } from "apache-arrow/vector";
-import { BufferType } from "apache-arrow/enum";
+import { Data, DataType, Vector, BufferType } from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
 
 type TypedArray =

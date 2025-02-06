@@ -1,7 +1,4 @@
-import { DataType } from "apache-arrow/type";
-import { BufferType } from "apache-arrow/enum";
-import { Data } from "apache-arrow/data";
-import { Vector } from "apache-arrow/vector";
+import { Data, Vector, BufferType, type DataType } from "apache-arrow";
 import { hardClone } from "./hard-clone";
 
 /**
@@ -63,6 +60,7 @@ export function preparePostMessage<T extends DataType>(
   if (input.buffers[BufferType.OFFSET] !== undefined) {
     transferArrayBuffers.push(input.buffers[BufferType.OFFSET].buffer);
   }
+
   if (input.buffers[BufferType.DATA] !== undefined) {
     transferArrayBuffers.push(input.buffers[BufferType.DATA].buffer);
   }
