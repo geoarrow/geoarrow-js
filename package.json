@@ -49,6 +49,7 @@
     "apache-arrow": ">=15"
   },
   "devDependencies": {
+    "@loaders.gl/core": "^4.3.3",
     "@loaders.gl/schema": "^4.3.3",
     "@loaders.gl/wkt": "^4.3.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
