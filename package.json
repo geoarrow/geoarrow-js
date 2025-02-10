@@ -1,6 +1,6 @@
 {
   "name": "@geoarrow/geoarrow-js",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "TypeScript implementation of GeoArrow",
   "source": "src/index.ts",
   "umd:main": "dist/geoarrow.umd.js",
