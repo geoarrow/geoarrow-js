@@ -1,8 +1,12 @@
 # Changelog
 
-## [0.3.2] - 2024-10-27
+## [0.3.3] - 2025-10-27
 
 - feat: Worker build improvements for earcut worker #39
+
+## [0.3.2] - 2025-02-10
+
+- Consolidate apache arrow imports by @danielfdsilva in #35
 
 ## [0.3.1] - 2024-06-25
 
