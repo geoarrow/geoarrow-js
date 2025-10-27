@@ -11,9 +11,13 @@
   "module": "dist/geoarrow.es.mjs",
   "main": "dist/geoarrow.cjs",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "require": "./dist/geoarrow.cjs",
-    "default": "./dist/geoarrow.es.mjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/geoarrow.cjs",
+      "default": "./dist/geoarrow.es.mjs"
+    },
+    "./earcut.worker.js": "./dist/earcut.worker.js",
+    "./earcut.worker.min.js": "./dist/earcut.worker.min.js"
   },
   "publishConfig": {
     "access": "public"
