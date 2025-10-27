@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.2] - 2024-10-27
+
+- feat: Worker build improvements for earcut worker #39
+
 ## [0.3.1] - 2024-06-25
 
 - Fix bundling by @kylebarron in https://github.com/geoarrow/geoarrow-js/pull/26
