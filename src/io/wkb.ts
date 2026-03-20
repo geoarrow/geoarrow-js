@@ -2,6 +2,7 @@ import { makeData, Field, FixedSizeList, Float64, List } from "apache-arrow";
 import {
   GeoArrowData,
   LineStringData,
+  MultiPolygonData,
   PointData,
   PolygonData,
   WKBData,
@@ -56,6 +57,12 @@ export function parseWkb(
 
     case WKBType.Polygon:
       return repackPolygons(parsedGeometries as BinaryPolygonGeometry[], dim);
+
+    case WKBType.MultiPolygon:
+      return repackMultiPolygons(
+        parsedGeometries as BinaryPolygonGeometry[],
+        dim,
+      );
 
     default:
       assertFalse("Not yet implemented for this geometry type");
@@ -253,6 +260,121 @@ function inferPolygonCapacity(geoms: BinaryPolygonGeometry[]): PolygonCapacity {
     );
     capacity.ringCapacity += geom.primitivePolygonIndices.value.length - 1;
     capacity.coordCapacty += geom.positions.value.length / geom.positions.size;
+  }
+
+  return capacity;
+}
+
+type MultiPolygonCapacity = {
+  coordCapacity: number;
+  ringCapacity: number;
+  polygonCapacity: number;
+  geomCapacity: number;
+};
+
+function repackMultiPolygons(
+  geoms: BinaryPolygonGeometry[],
+  dim: number,
+): MultiPolygonData {
+  const capacity = inferMultiPolygonCapacity(geoms);
+  const coords = new Float64Array(capacity.coordCapacity * dim);
+  const ringOffsets = new Int32Array(capacity.ringCapacity + 1);
+  const polygonOffsets = new Int32Array(capacity.polygonCapacity + 1);
+  const geomOffsets = new Int32Array(capacity.geomCapacity + 1);
+
+  let geomIndex = 0;
+  let polygonIndex = 0;
+  let ringIndex = 0;
+  let coordOffset = 0;
+
+  for (const geom of geoms) {
+    assert(geom.positions.value instanceof Float64Array);
+    const numCoords = geom.positions.value.length / geom.positions.size;
+
+    coords.set(geom.positions.value, coordOffset * dim);
+
+    // polygonIndices uses coordinate indices (not ring indices) to separate
+    // component polygons. We scan primitivePolygonIndices to find which rings
+    // belong to each polygon.
+    const primIndices = geom.primitivePolygonIndices.value;
+    const polyCoordIndices =
+      geom.polygonIndices?.value ?? new Int32Array([0, numCoords]);
+    const numPolygons = polyCoordIndices.length - 1;
+    let ringPtr = 0;
+
+    for (let p = 0; p < numPolygons; p++) {
+      const polyCoordEnd = polyCoordIndices[p + 1];
+
+      // Assign rings to this polygon: a ring belongs here if its start
+      // coordinate index falls before the polygon's end coordinate index.
+      while (
+        ringPtr < primIndices.length - 1 &&
+        primIndices[ringPtr] < polyCoordEnd
+      ) {
+        ringOffsets[ringIndex + 1] =
+          ringOffsets[ringIndex] +
+          (primIndices[ringPtr + 1] - primIndices[ringPtr]);
+        ringIndex += 1;
+        ringPtr += 1;
+      }
+
+      polygonOffsets[polygonIndex + 1] = ringIndex;
+      polygonIndex += 1;
+    }
+
+    coordOffset += numCoords;
+    geomOffsets[geomIndex + 1] = polygonIndex;
+    geomIndex += 1;
+  }
+
+  const coordsData = makeData({
+    type: new Float64(),
+    data: coords,
+  });
+  const verticesData = makeData({
+    type: new FixedSizeList(
+      dim,
+      new Field(coordFieldName(dim), coordsData.type, false),
+    ),
+    child: coordsData,
+  });
+  const ringsData = makeData({
+    type: new List(new Field("vertices", verticesData.type, false)),
+    valueOffsets: ringOffsets,
+    child: verticesData,
+  });
+  const polygonsData = makeData({
+    type: new List(new Field("rings", ringsData.type, false)),
+    valueOffsets: polygonOffsets,
+    child: ringsData,
+  });
+  return makeData({
+    type: new List(new Field("polygons", polygonsData.type, false)),
+    valueOffsets: geomOffsets,
+    child: polygonsData,
+  });
+}
+
+function inferMultiPolygonCapacity(
+  geoms: BinaryPolygonGeometry[],
+): MultiPolygonCapacity {
+  let capacity: MultiPolygonCapacity = {
+    coordCapacity: 0,
+    ringCapacity: 0,
+    polygonCapacity: 0,
+    geomCapacity: 0,
+  };
+
+  for (const geom of geoms) {
+    capacity.geomCapacity += 1;
+    const polyIndices = geom.polygonIndices?.value;
+    if (polyIndices) {
+      capacity.polygonCapacity += polyIndices.length - 1;
+    } else {
+      capacity.polygonCapacity += 1;
+    }
+    capacity.ringCapacity += geom.primitivePolygonIndices.value.length - 1;
+    capacity.coordCapacity += geom.positions.value.length / geom.positions.size;
   }
 
   return capacity;
