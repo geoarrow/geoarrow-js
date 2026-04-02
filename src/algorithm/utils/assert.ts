@@ -4,6 +4,6 @@ export function assert(condition: boolean, message?: string) {
   }
 }
 
-export function assertFalse(): never {
-  throw new Error(`assertion failed`);
+export function assertFalse(message?: string): never {
+  throw new Error(`assertion failed ${message}`);
 }
