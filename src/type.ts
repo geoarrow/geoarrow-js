@@ -1,4 +1,5 @@
 import {
+  type Binary,
   type Struct,
   type Float,
   type List,
@@ -29,6 +30,7 @@ export type GeoArrowType =
   | MultiPoint
   | MultiLineString
   | MultiPolygon;
+export type WKB = Binary;
 
 /** Check that the given type is a Point data type */
 export function isPoint(type: DataType): type is Point {
