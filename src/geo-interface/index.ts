@@ -1,0 +1,10 @@
+export type Dimension = "XY" | "XYZ";
+
+export function sizeOf(dim: Dimension): number {
+  switch (dim) {
+    case "XY":
+      return 2;
+    case "XYZ":
+      return 3;
+  }
+}
