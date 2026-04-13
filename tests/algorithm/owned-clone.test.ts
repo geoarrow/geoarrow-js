@@ -2,7 +2,7 @@ import * as arrow from "apache-arrow";
 import { describe, expect, it } from "vitest";
 import { hardClone, isShared } from "../../src/worker/hard-clone";
 
-describe("hard clone", (t) => {
+describe("hard clone", (_t) => {
   it("should hard clone array", () => {
     const vector = arrow.makeVector(new Int32Array([1, 2, 3]));
     const data = vector.data[0];

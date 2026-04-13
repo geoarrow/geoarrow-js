@@ -5,7 +5,9 @@ import type { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
 
 export enum Winding {
+  // biome-ignore lint/style/useLiteralEnumMembers: Using external library enum values
   CLOCKWISE = _WINDING.CLOCKWISE,
+  // biome-ignore lint/style/useLiteralEnumMembers: Using external library enum values
   COUNTER_CLOCKWISE = _WINDING.COUNTER_CLOCKWISE,
 }
 
@@ -67,9 +69,9 @@ export function modifyWindingDirection(
   winding: Winding,
 ): void {
   if ("data" in input) {
-    input.data.forEach((polygonData) =>
-      modifyWindingDirection(polygonData, winding),
-    );
+    input.data.forEach((polygonData) => {
+      modifyWindingDirection(polygonData, winding);
+    });
     return;
   }
 

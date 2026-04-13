@@ -50,7 +50,7 @@ type PostMessageData<T extends DataType> = Pick<
   type: PostMessageDataType;
 };
 type PostMessageVector<T extends DataType> = Pick<
-  Vector,
+  Vector<T>,
   "data" | "length" | "stride" | "numChildren"
 > & { type: PostMessageDataType };
 
