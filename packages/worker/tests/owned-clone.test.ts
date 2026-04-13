@@ -1,6 +1,6 @@
 import * as arrow from "apache-arrow";
 import { describe, expect, it } from "vitest";
-import { hardClone, isShared } from "../../src/worker/hard-clone";
+import { hardClone, isShared } from "../src/index.js";
 
 describe("hard clone", (_t) => {
   it("should hard clone array", () => {

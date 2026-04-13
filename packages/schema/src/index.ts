@@ -24,7 +24,23 @@ export {
   isPointData,
   isPolygonData,
 } from "./data.js";
-export { GeoArrowType } from "./type.js";
+export type {
+  GeoArrowType,
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from "./type.js";
+export {
+  isLineString,
+  isMultiLineString,
+  isMultiPoint,
+  isMultiPolygon,
+  isPoint,
+  isPolygon,
+} from "./type.js";
 export type {
   GeoArrowVector,
   LineStringVector,

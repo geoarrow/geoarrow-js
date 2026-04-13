@@ -1,6 +1,6 @@
 import * as arrow from "apache-arrow";
 import { describe, expect, it } from "vitest";
-import { preparePostMessage, rehydrateData } from "../../src/worker";
+import { preparePostMessage, rehydrateData } from "../src/index.js";
 
 describe("transfer", (_t) => {
   it("should transfer correctly", () => {

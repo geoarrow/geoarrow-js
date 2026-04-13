@@ -1,3 +1,5 @@
+import type { Polygon, PolygonData } from "@geoarrow/schema";
+import { isPolygon } from "@geoarrow/schema";
 import type { DataType } from "apache-arrow";
 import {
   Binary,
@@ -25,9 +27,6 @@ import {
   Vector,
 } from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
-import type { PolygonData } from "../data";
-import type { Polygon } from "../type";
-import { isPolygon } from "../type";
 
 // Typedefs that include only the information kept from a structuredClone
 type PostMessageDataType = Pick<DataType, "children" | "typeId">;
