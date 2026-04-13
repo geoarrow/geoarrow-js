@@ -16,7 +16,7 @@ describe("PointBuilder", () => {
     for (const p of points) b.pushPoint(p);
     const data = b.finish();
     expect(data.length).toBe(3);
-    expect(data.nullBitmap).toBeUndefined();
+    expect(data.nullCount).toBe(0);
     expect(Array.from(data.children[0].values as Float64Array)).toEqual([
       1, 2, 3, 4, 5, 6,
     ]);
@@ -61,7 +61,7 @@ describe("PointBuilder", () => {
     b.pushPoint(new RefPoint([1, 2], "XY"));
     b.pushPoint(new RefPoint(null, "XY"));
     const data = b.finish();
-    expect(data.nullBitmap).toBeUndefined();
+    expect(data.nullCount).toBe(0);
     const values = data.children[0].values as Float64Array;
     expect(values[0]).toBe(1);
     expect(values[1]).toBe(2);
@@ -94,7 +94,7 @@ describe("PointBuilder", () => {
     b.pushGeometry(new RefMultiPoint([], "XY"));
     const data = b.finish();
     expect(data.length).toBe(1);
-    expect(data.nullBitmap).toBeUndefined();
+    expect(data.nullCount).toBe(0);
     const values = data.children[0].values as Float64Array;
     expect(Number.isNaN(values[0])).toBe(true);
     expect(Number.isNaN(values[1])).toBe(true);

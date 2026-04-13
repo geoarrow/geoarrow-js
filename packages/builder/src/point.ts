@@ -5,7 +5,7 @@ import type {
   PointInterface,
 } from "@geoarrow/geo-interface";
 import type { PointData } from "@geoarrow/schema";
-import type { Data, FixedSizeList, Float } from "apache-arrow";
+import type { Data, Float } from "apache-arrow";
 import { makeData } from "apache-arrow";
 import type { PointCapacity } from "./capacity/point.js";
 import { BitmapBuilder } from "./internal/bitmap.js";
@@ -93,19 +93,22 @@ export class PointBuilder {
     // PointData = Data<Point> = Data<FixedSizeList<Float>>, structurally
     // identical to CoordBufferBuilder's output. Rebuild via makeData so
     // we attach the validity bitmap cleanly without relying on shallow
-    // spread of an Arrow Data instance. apache-arrow's makeData always
-    // coerces a missing nullBitmap into an empty Uint8Array, so when we
-    // have no validity buffer we restore `undefined` post-construction
-    // to communicate "all valid".
-    const data = makeData<FixedSizeList<Float>>({
+    // spread of an Arrow Data instance. When no validity buffer exists,
+    // pass nullCount: 0 explicitly so the resulting Data reports zero
+    // nulls regardless of how apache-arrow normalizes a missing bitmap.
+    if (nullBitmap === undefined) {
+      return makeData({
+        type: coordData.type,
+        length: coordData.length,
+        nullCount: 0,
+        child: coordData.children[0] as Data<Float>,
+      }) as PointData;
+    }
+    return makeData({
       type: coordData.type,
       length: coordData.length,
       nullBitmap,
       child: coordData.children[0] as Data<Float>,
-    });
-    if (nullBitmap === undefined) {
-      (data as { nullBitmap: Uint8Array | undefined }).nullBitmap = undefined;
-    }
-    return data as PointData;
+    }) as PointData;
   }
 }
