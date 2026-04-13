@@ -1,10 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { testPointData } from "../util/point";
-import { reproject } from "../../src/algorithm";
-
 import proj4 from "proj4";
+import { describe, expect, it } from "vitest";
+import { reproject } from "../../src/algorithm";
+import { testPointData } from "../util/point";
 
-describe("reproject", (t) => {
+describe("reproject", (_t) => {
   it("should reproject point array", () => {
     const pointData = testPointData();
     const reprojected = reproject(pointData, "EPSG:4326", "EPSG:3857");

@@ -1,8 +1,8 @@
 import * as arrow from "apache-arrow";
 import { describe, expect, it } from "vitest";
-import { rehydrateData, preparePostMessage } from "../../src/worker";
+import { preparePostMessage, rehydrateData } from "../../src/worker";
 
-describe("transfer", (t) => {
+describe("transfer", (_t) => {
   it("should transfer correctly", () => {
     const vector = arrow.makeVector(new Int32Array([1, 2, 3]));
     const firstValue = vector.get(0);

@@ -1,6 +1,6 @@
 import * as arrow from "apache-arrow";
 import proj4 from "proj4";
-import { GeoArrowType } from "../type";
+import type { GeoArrowType } from "../type";
 import { mapCoords } from "./coords";
 
 /**

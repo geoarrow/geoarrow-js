@@ -1,5 +1,5 @@
 import * as arrow from "apache-arrow";
-import { PointData } from "../../src/data";
+import type { PointData } from "../../src/data";
 
 export function testPointData(): PointData {
   const values = new Float64Array([1, 2, 3, 4, 5, 6]);

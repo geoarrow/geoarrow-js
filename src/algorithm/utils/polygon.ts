@@ -1,10 +1,10 @@
-import { PolygonData } from "../../data";
 import { Polygon } from "@math.gl/polygon";
 import {
   getLineStringChild,
   getPointChild,
   getPolygonChild,
 } from "../../child";
+import type { PolygonData } from "../../data";
 
 export function makeMathGlPolygon(
   data: PolygonData,

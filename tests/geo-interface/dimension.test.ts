@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { sizeOf, type Dimension } from "../../src/geo-interface/index.js";
+import type { Dimension } from "../../src/geo-interface/index.js";
+import { sizeOf } from "../../src/geo-interface/index.js";
 
 describe("sizeOf", () => {
   it("returns 2 for XY", () => {

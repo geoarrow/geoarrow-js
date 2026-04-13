@@ -1,4 +1,5 @@
-import { BufferType, type Data, type DataType, Vector } from "apache-arrow";
+import type { Data, DataType } from "apache-arrow";
+import { BufferType, Vector } from "apache-arrow";
 import { hardClone } from "./hard-clone";
 
 /**

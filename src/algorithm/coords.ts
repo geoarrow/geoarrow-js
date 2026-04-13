@@ -1,13 +1,11 @@
 import * as arrow from "apache-arrow";
 import {
-  LineString,
-  MultiLineString,
-  MultiPoint,
-  MultiPolygon,
-  Point,
-  Polygon,
-} from "../type";
-import {
+  getLineStringChild,
+  getMultiPolygonChild,
+  getPointChild,
+  getPolygonChild,
+} from "../child";
+import type {
   GeoArrowData,
   LineStringData,
   MultiLineStringData,
@@ -15,6 +13,8 @@ import {
   MultiPolygonData,
   PointData,
   PolygonData,
+} from "../data";
+import {
   isLineStringData,
   isMultiLineStringData,
   isMultiPointData,
@@ -22,12 +22,14 @@ import {
   isPointData,
   isPolygonData,
 } from "../data";
-import {
-  getLineStringChild,
-  getMultiPolygonChild,
-  getPointChild,
-  getPolygonChild,
-} from "../child";
+import type {
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from "../type";
 import { assert, assertFalse } from "./utils/assert";
 
 // For now, simplify our lives by focusing on 2D

@@ -1,11 +1,13 @@
-import * as arrow from "apache-arrow";
-import { PolygonData } from "../data";
-import { PolygonVector } from "../vector";
-import { makeMathGlPolygon } from "./utils/polygon";
 import { WINDING as _WINDING } from "@math.gl/polygon";
+import * as arrow from "apache-arrow";
+import type { PolygonData } from "../data";
+import type { PolygonVector } from "../vector";
+import { makeMathGlPolygon } from "./utils/polygon";
 
 export enum Winding {
+  // biome-ignore lint/style/useLiteralEnumMembers: Using external library enum values
   CLOCKWISE = _WINDING.CLOCKWISE,
+  // biome-ignore lint/style/useLiteralEnumMembers: Using external library enum values
   COUNTER_CLOCKWISE = _WINDING.COUNTER_CLOCKWISE,
 }
 
@@ -29,7 +31,7 @@ export function windingDirection(
     );
   }
 
-  let builder = new arrow.BoolBuilder({
+  const builder = new arrow.BoolBuilder({
     type: new arrow.Bool(),
     nullValues: [null],
   });
@@ -42,8 +44,8 @@ export function windingDirection(
       continue;
     }
 
-    let polygon = makeMathGlPolygon(input, geomIndex);
-    let winding = polygon.getWindingDirection();
+    const polygon = makeMathGlPolygon(input, geomIndex);
+    const winding = polygon.getWindingDirection();
     builder.set(geomIndex, winding === Winding.CLOCKWISE);
   }
 
@@ -67,16 +69,16 @@ export function modifyWindingDirection(
   winding: Winding,
 ): void {
   if ("data" in input) {
-    input.data.forEach((polygonData) =>
-      modifyWindingDirection(polygonData, winding),
-    );
+    input.data.forEach((polygonData) => {
+      modifyWindingDirection(polygonData, winding);
+    });
     return;
   }
 
   for (let geomIndex = 0; geomIndex < input.length; geomIndex++) {
     // This polygon is a reference onto the PolygonData, so mutating it will
     // mutate the PolygonData
-    let polygon = makeMathGlPolygon(input, geomIndex);
+    const polygon = makeMathGlPolygon(input, geomIndex);
     polygon.modifyWindingDirection(winding);
   }
 }

@@ -1,17 +1,19 @@
-import { Vector } from "apache-arrow";
-import {
-  Point,
+import type { Vector } from "apache-arrow";
+import type {
   LineString,
-  Polygon,
-  MultiPoint,
   MultiLineString,
+  MultiPoint,
   MultiPolygon,
-  isPoint,
+  Point,
+  Polygon,
+} from "./type";
+import {
   isLineString,
-  isPolygon,
-  isMultiPoint,
   isMultiLineString,
+  isMultiPoint,
   isMultiPolygon,
+  isPoint,
+  isPolygon,
 } from "./type";
 
 export type PointVector = Vector<Point>;

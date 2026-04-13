@@ -2,9 +2,7 @@
   "name": "@geoarrow/geoarrow-js",
   "cleanOutputDir": true,
   "darkHighlightTheme": "github-dark",
-  "entryPoints": [
-    "dist/index.d.ts",
-  ],
+  "entryPoints": ["dist/index.d.ts"],
   "lightHighlightTheme": "github-light",
   "tsconfig": "tsconfig.docs.json",
   "out": "docs_build",

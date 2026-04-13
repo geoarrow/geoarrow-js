@@ -1,17 +1,17 @@
 import * as arrow from "apache-arrow";
-import {
-  LineStringVector,
-  MultiLineStringVector,
-  MultiPolygonVector,
-  PolygonVector,
-} from "../vector";
-import {
+import { getMultiPolygonChild, getPolygonChild } from "../child";
+import type {
   LineStringData,
   MultiLineStringData,
   MultiPolygonData,
   PolygonData,
 } from "../data";
-import { getMultiPolygonChild, getPolygonChild } from "../child";
+import type {
+  LineStringVector,
+  MultiLineStringVector,
+  MultiPolygonVector,
+  PolygonVector,
+} from "../vector";
 
 /**
  * Get the exterior of a PolygonVector or PolygonData
