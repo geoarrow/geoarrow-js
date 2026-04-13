@@ -1,9 +1,9 @@
 {
   "name": "@geoarrow/geo-interface",
   "version": "0.4.0-beta.0",
-  "description": "",
+  "description": "TypeScript interfaces for GeoArrow geometries — port of the Rust geo-traits crate.",
+  "keywords": ["geoarrow", "geometry", "geo-traits", "geospatial", "typescript"],
   "type": "module",
-  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -12,31 +12,25 @@
     }
   },
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm build"
   },
-  "keywords": [],
-  "author": "Development Seed",
+  "author": "Kyle Barron <kylebarron2@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/geoarrow/geoarrow-js.git"
+    "url": "git+https://github.com/geoarrow/geoarrow-js.git",
+    "directory": "packages/geo-interface"
   },
   "devDependencies": {
-    "@types/node": "^25.3.3",
-    "jsdom": "^28.1.0",
     "typescript": "^6.0.2",
     "vitest": "^4.0.18"
   },
-  "dependencies": {},
-  "peerDependencies": {},
   "volta": {
     "extends": "../../package.json"
   }
