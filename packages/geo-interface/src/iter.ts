@@ -8,7 +8,7 @@ import type {
   MultiPolygonInterface,
   PointInterface,
   PolygonInterface,
-} from "./index.js";
+} from "./interface.js";
 
 /**
  * Yields every coordinate of a line string in order.
