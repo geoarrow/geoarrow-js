@@ -90,20 +90,6 @@ export class PointBuilder {
   finish(): PointData {
     const coordData = this.coords.finish();
     const nullBitmap = this.validity.finish();
-    // PointData = Data<Point> = Data<FixedSizeList<Float>>, structurally
-    // identical to CoordBufferBuilder's output. Rebuild via makeData so
-    // we attach the validity bitmap cleanly without relying on shallow
-    // spread of an Arrow Data instance. When no validity buffer exists,
-    // pass nullCount: 0 explicitly so the resulting Data reports zero
-    // nulls regardless of how apache-arrow normalizes a missing bitmap.
-    if (nullBitmap === undefined) {
-      return makeData({
-        type: coordData.type,
-        length: coordData.length,
-        nullCount: 0,
-        child: coordData.children[0] as Data<Float>,
-      }) as PointData;
-    }
     return makeData({
       type: coordData.type,
       length: coordData.length,
