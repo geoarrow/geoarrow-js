@@ -14,12 +14,12 @@ export type Dimension = "XY" | "XYZ";
  * @returns `2` for `"XY"`, `3` for `"XYZ"`.
  */
 export function sizeOf(dim: Dimension): number {
-	switch (dim) {
-		case "XY":
-			return 2;
-		case "XYZ":
-			return 3;
-	}
+  switch (dim) {
+    case "XY":
+      return 2;
+    case "XYZ":
+      return 3;
+  }
 }
 
 /**
@@ -31,17 +31,17 @@ export function sizeOf(dim: Dimension): number {
  * caller bug and is not bounds-checked.
  */
 export interface CoordInterface {
-	/** Dimension of this coordinate. */
-	dim(): Dimension;
-	/** First ordinate. Always valid. */
-	x(): number;
-	/** Second ordinate. Always valid. */
-	y(): number;
-	/**
-	 * n-th ordinate by index: `0 = x`, `1 = y`, `2 = z` (`"XYZ"` only).
-	 * No bounds check — the caller is responsible for respecting `dim()`.
-	 */
-	nth(n: number): number;
+  /** Dimension of this coordinate. */
+  dim(): Dimension;
+  /** First ordinate. Always valid. */
+  x(): number;
+  /** Second ordinate. Always valid. */
+  y(): number;
+  /**
+   * n-th ordinate by index: `0 = x`, `1 = y`, `2 = z` (`"XYZ"` only).
+   * No bounds check — the caller is responsible for respecting `dim()`.
+   */
+  nth(n: number): number;
 }
 
 /**
@@ -51,11 +51,11 @@ export interface CoordInterface {
  * point at the origin: `coord()` returns `null` for an empty point.
  */
 export interface PointInterface {
-	readonly geometryType: "Point";
-	/** Dimension of this point's coordinate, if any. */
-	dim(): Dimension;
-	/** The point's coordinate, or `null` if the point is empty. */
-	coord(): CoordInterface | null;
+  readonly geometryType: "Point";
+  /** Dimension of this point's coordinate, if any. */
+  dim(): Dimension;
+  /** The point's coordinate, or `null` if the point is empty. */
+  coord(): CoordInterface | null;
 }
 
 /**
@@ -65,13 +65,13 @@ export interface PointInterface {
  * `numCoords()` before calling `coord(i)`.
  */
 export interface LineStringInterface {
-	readonly geometryType: "LineString";
-	/** Dimension of every coordinate in this line string. */
-	dim(): Dimension;
-	/** Number of coordinates in this line string. */
-	numCoords(): number;
-	/** The i-th coordinate. No bounds check. */
-	coord(i: number): CoordInterface;
+  readonly geometryType: "LineString";
+  /** Dimension of every coordinate in this line string. */
+  dim(): Dimension;
+  /** Number of coordinates in this line string. */
+  numCoords(): number;
+  /** The i-th coordinate. No bounds check. */
+  coord(i: number): CoordInterface;
 }
 
 /**
@@ -82,15 +82,15 @@ export interface LineStringInterface {
  * rings, so `numInteriors() === 0` for any empty polygon.
  */
 export interface PolygonInterface {
-	readonly geometryType: "Polygon";
-	/** Dimension of every coordinate in this polygon. */
-	dim(): Dimension;
-	/** Number of interior rings (holes). */
-	numInteriors(): number;
-	/** The exterior ring, or `null` if the polygon is empty. */
-	exterior(): LineStringInterface | null;
-	/** The i-th interior ring. No bounds check. */
-	interior(i: number): LineStringInterface;
+  readonly geometryType: "Polygon";
+  /** Dimension of every coordinate in this polygon. */
+  dim(): Dimension;
+  /** Number of interior rings (holes). */
+  numInteriors(): number;
+  /** The exterior ring, or `null` if the polygon is empty. */
+  exterior(): LineStringInterface | null;
+  /** The i-th interior ring. No bounds check. */
+  interior(i: number): LineStringInterface;
 }
 
 /**
@@ -99,13 +99,13 @@ export interface PolygonInterface {
  * An empty multi-point has `numPoints() === 0`.
  */
 export interface MultiPointInterface {
-	readonly geometryType: "MultiPoint";
-	/** Dimension of every point in this multi-point. */
-	dim(): Dimension;
-	/** Number of points. */
-	numPoints(): number;
-	/** The i-th point. No bounds check. */
-	point(i: number): PointInterface;
+  readonly geometryType: "MultiPoint";
+  /** Dimension of every point in this multi-point. */
+  dim(): Dimension;
+  /** Number of points. */
+  numPoints(): number;
+  /** The i-th point. No bounds check. */
+  point(i: number): PointInterface;
 }
 
 /**
@@ -114,13 +114,13 @@ export interface MultiPointInterface {
  * An empty multi-line-string has `numLineStrings() === 0`.
  */
 export interface MultiLineStringInterface {
-	readonly geometryType: "MultiLineString";
-	/** Dimension of every line string in this multi-line-string. */
-	dim(): Dimension;
-	/** Number of line strings. */
-	numLineStrings(): number;
-	/** The i-th line string. No bounds check. */
-	lineString(i: number): LineStringInterface;
+  readonly geometryType: "MultiLineString";
+  /** Dimension of every line string in this multi-line-string. */
+  dim(): Dimension;
+  /** Number of line strings. */
+  numLineStrings(): number;
+  /** The i-th line string. No bounds check. */
+  lineString(i: number): LineStringInterface;
 }
 
 /**
@@ -129,13 +129,13 @@ export interface MultiLineStringInterface {
  * An empty multi-polygon has `numPolygons() === 0`.
  */
 export interface MultiPolygonInterface {
-	readonly geometryType: "MultiPolygon";
-	/** Dimension of every polygon in this multi-polygon. */
-	dim(): Dimension;
-	/** Number of polygons. */
-	numPolygons(): number;
-	/** The i-th polygon. No bounds check. */
-	polygon(i: number): PolygonInterface;
+  readonly geometryType: "MultiPolygon";
+  /** Dimension of every polygon in this multi-polygon. */
+  dim(): Dimension;
+  /** Number of polygons. */
+  numPolygons(): number;
+  /** The i-th polygon. No bounds check. */
+  polygon(i: number): PolygonInterface;
 }
 
 /**
@@ -145,13 +145,13 @@ export interface MultiPolygonInterface {
  * `GeometryCollectionInterface` values.
  */
 export interface GeometryCollectionInterface {
-	readonly geometryType: "GeometryCollection";
-	/** Dimension of this collection. Children are expected to share this dimension. */
-	dim(): Dimension;
-	/** Number of child geometries. */
-	numGeometries(): number;
-	/** The i-th child geometry. No bounds check. */
-	geometry(i: number): GeometryInterface;
+  readonly geometryType: "GeometryCollection";
+  /** Dimension of this collection. Children are expected to share this dimension. */
+  dim(): Dimension;
+  /** Number of child geometries. */
+  numGeometries(): number;
+  /** The i-th child geometry. No bounds check. */
+  geometry(i: number): GeometryInterface;
 }
 
 /**
@@ -170,12 +170,12 @@ export interface GeometryCollectionInterface {
  * ```
  */
 export type GeometryInterface =
-	| PointInterface
-	| LineStringInterface
-	| PolygonInterface
-	| MultiPointInterface
-	| MultiLineStringInterface
-	| MultiPolygonInterface
-	| GeometryCollectionInterface;
+  | PointInterface
+  | LineStringInterface
+  | PolygonInterface
+  | MultiPointInterface
+  | MultiLineStringInterface
+  | MultiPolygonInterface
+  | GeometryCollectionInterface;
 
 export * from "./iter.js";

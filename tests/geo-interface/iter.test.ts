@@ -70,9 +70,7 @@ describe("iterInteriors", () => {
       "XY",
     );
     const p = new RefPolygon(shell, [hole1, hole2], "XY");
-    const firstCoords = [...iterInteriors(p)].map((ring) =>
-      ring.coord(0).x(),
-    );
+    const firstCoords = [...iterInteriors(p)].map((ring) => ring.coord(0).x());
     expect(firstCoords).toEqual([1, 5]);
   });
 });
