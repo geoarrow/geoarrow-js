@@ -7,6 +7,12 @@
  * equivalent to a fully-set bitmap but one allocation smaller.
  *
  * Uses Arrow's standard bit convention: `1 = valid`, `0 = null`.
+ *
+ * Capacity is fixed at construction. Callers must respect `capacity` and
+ * append no more than that many rows — exceeding it after allocation will
+ * silently drop bits past the buffer end. The two-pass design in
+ * `@geoarrow/builder` guarantees this when capacity classes and builders
+ * are used together as intended.
  */
 export class BitmapBuilder {
   private buf: Uint8Array | null = null;

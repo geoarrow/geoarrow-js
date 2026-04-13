@@ -25,6 +25,16 @@ describe("BitmapBuilder", () => {
     expect(buf![0]).toBe(0x1f);
   });
 
+  it("back-fills correctly across byte boundaries", () => {
+    const b = new BitmapBuilder(24);
+    for (let i = 0; i < 10; i++) b.appendValid();
+    b.appendNull(); // idx 10 - triggers allocation, back-fill must span bytes 0 and 1
+    const buf = b.finish();
+    expect(buf).toBeInstanceOf(Uint8Array);
+    expect(buf![0]).toBe(0xff); // bits 0..7 all valid
+    expect(buf![1]).toBe(0x03); // bits 8, 9 valid; bit 10 null
+  });
+
   it("treats first-append-is-null correctly", () => {
     const b = new BitmapBuilder(8);
     b.appendNull();
