@@ -2,6 +2,7 @@ import type {
   CoordTrait,
   Dimension,
   LineStringTrait,
+  MultiLineStringTrait,
   MultiPointTrait,
   PointTrait,
   PolygonTrait,
@@ -92,5 +93,22 @@ export class RefMultiPoint implements MultiPointTrait {
   }
   point(i: number): PointTrait {
     return this._points[i];
+  }
+}
+
+export class RefMultiLineString implements MultiLineStringTrait {
+  readonly geometryType = "MultiLineString" as const;
+  constructor(
+    private readonly _lineStrings: readonly RefLineString[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  numLineStrings(): number {
+    return this._lineStrings.length;
+  }
+  lineString(i: number): LineStringTrait {
+    return this._lineStrings[i];
   }
 }

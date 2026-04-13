@@ -43,3 +43,10 @@ export interface MultiPointTrait {
   numPoints(): number;
   point(i: number): PointTrait;
 }
+
+export interface MultiLineStringTrait {
+  readonly geometryType: "MultiLineString";
+  dim(): Dimension;
+  numLineStrings(): number;
+  lineString(i: number): LineStringTrait;
+}
