@@ -58,28 +58,23 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.2",
-    "@types/node": "^20.9.3",
-    "@types/proj4": "^2",
-    "apache-arrow": "^15",
-    "esbuild": "^0.19.8",
-    "gh-pages": "^6.1.0",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.1.5",
-    "rollup-plugin-dts": "^6.1.0",
-    "ts-node": "^10.9.1",
-    "typedoc": "^0.25.4",
-    "typescript": "^5.2.2",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.19.39",
+    "@types/proj4": "^2.19.0",
+    "apache-arrow": "^21.1.0",
+    "esbuild": "^0.19.12",
+    "gh-pages": "^6.3.0",
+    "rimraf": "^5.0.10",
+    "rollup": "^4.60.1",
+    "rollup-plugin-dts": "^6.4.1",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.9.3",
     "vitest": "^0.34.6"
   },
   "volta": {
     "node": "20.9.0"
-  },
-  "dependencies": {
-    "@math.gl/polygon": "^4.0.0",
-    "proj4": "^2.9.2",
-    "threads": "^1.7.0"
   }
 }
