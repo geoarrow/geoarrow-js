@@ -1,5 +1,5 @@
+import type { PolygonData } from "@geoarrow/schema";
 import * as arrow from "apache-arrow";
-import type { PolygonData } from "../data";
 import type { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
 

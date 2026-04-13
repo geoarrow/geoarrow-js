@@ -1,4 +1,12 @@
 import * as arrow from "apache-arrow";
+import type {
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from "../../schema/src/type";
 import {
   getLineStringChild,
   getMultiPolygonChild,
@@ -22,14 +30,6 @@ import {
   isPointData,
   isPolygonData,
 } from "../data";
-import type {
-  LineString,
-  MultiLineString,
-  MultiPoint,
-  MultiPolygon,
-  Point,
-  Polygon,
-} from "../type";
 import { assert, assertFalse } from "./utils/assert";
 
 // For now, simplify our lives by focusing on 2D

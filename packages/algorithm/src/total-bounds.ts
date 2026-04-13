@@ -1,11 +1,11 @@
 import type * as arrow from "apache-arrow";
+import { EXTENSION_NAME } from "../../schema/src/constants.js";
 import {
   getLineStringChild,
   getMultiPolygonChild,
   getPointChild,
   getPolygonChild,
 } from "../child.js";
-import { EXTENSION_NAME } from "../constants.js";
 import type { PointData } from "../data.js";
 import type {
   LineStringVector,
