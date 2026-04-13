@@ -32,13 +32,13 @@
   "scripts": {
     "build:rollup": "rollup -c rollup.config.js",
     "build:workers": "node ./worker-build.mjs",
-    "build": "yarn build:rollup && yarn build:workers",
+    "build": "pnpm build:rollup && pnpm build:workers",
     "clean": "rimraf dist",
     "docs:build": "typedoc",
     "docs:publish": "gh-pages -d docs_build",
     "fmt:check": "prettier './src/**/*.ts' './tests/**/*.ts' --check",
     "fmt": "prettier './src/**/*.ts' './tests/**/*.ts' --write",
-    "prepublishOnly": "yarn clean && yarn build",
+    "prepublishOnly": "pnpm clean && pnpm build",
     "test": "vitest run",
     "typecheck": "tsc --build",
     "watch": "tsc --watch --declaration"
@@ -70,8 +70,7 @@
     "vitest": "^0.34.6"
   },
   "volta": {
-    "node": "20.9.0",
-    "yarn": "4.0.2"
+    "node": "20.9.0"
   },
   "dependencies": {
     "@math.gl/polygon": "^4.0.0",
