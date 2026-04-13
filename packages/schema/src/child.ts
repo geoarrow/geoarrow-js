@@ -10,7 +10,7 @@ import type {
   MultiPolygonData,
   PointData,
   PolygonData,
-} from "./data";
+} from "./data.js";
 import type {
   LineStringVector,
   MultiLineStringVector,
@@ -18,7 +18,7 @@ import type {
   MultiPolygonVector,
   PointVector,
   PolygonVector,
-} from "./vector";
+} from "./vector.js";
 
 export function getPointChild(input: PointData): Data<Float>;
 export function getPointChild(input: PointVector): Vector<Float>;

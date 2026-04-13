@@ -6,7 +6,7 @@ import type {
   MultiPolygon,
   Point,
   Polygon,
-} from "./type";
+} from "./type.js";
 import {
   isLineString,
   isMultiLineString,
@@ -14,7 +14,7 @@ import {
   isMultiPolygon,
   isPoint,
   isPolygon,
-} from "./type";
+} from "./type.js";
 
 export type PointVector = Vector<Point>;
 export type LineStringVector = Vector<LineString>;
