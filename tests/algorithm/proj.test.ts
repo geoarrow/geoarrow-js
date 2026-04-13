@@ -1,8 +1,7 @@
-import { describe, expect, it } from "vitest";
-import { testPointData } from "../util/point";
-import { reproject } from "../../src/algorithm";
-
 import proj4 from "proj4";
+import { describe, expect, it } from "vitest";
+import { reproject } from "../../src/algorithm";
+import { testPointData } from "../util/point";
 
 describe("reproject", (t) => {
   it("should reproject point array", () => {

@@ -1,32 +1,33 @@
+import type { DataType } from "apache-arrow";
 import {
-  BufferType,
-  Type,
-  Data,
-  Vector,
-  Field,
-  Null,
-  Int,
-  Float,
   Binary,
-  Utf8,
   Bool,
-  Decimal,
+  BufferType,
+  Data,
   Date_,
-  Time,
-  Timestamp,
-  Interval,
-  List,
-  Struct,
-  Union,
+  Decimal,
+  Duration,
+  Field,
   FixedSizeBinary,
   FixedSizeList,
+  Float,
+  Int,
+  Interval,
+  List,
   Map_,
-  Duration,
-  type DataType,
+  Null,
+  Struct,
+  Time,
+  Timestamp,
+  Type,
+  Union,
+  Utf8,
+  Vector,
 } from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
-import { Polygon, isPolygon } from "../type";
-import { PolygonData } from "../data";
+import type { PolygonData } from "../data";
+import type { Polygon } from "../type";
+import { isPolygon } from "../type";
 
 // Typedefs that include only the information kept from a structuredClone
 type PostMessageDataType = Pick<DataType, "children" | "typeId">;

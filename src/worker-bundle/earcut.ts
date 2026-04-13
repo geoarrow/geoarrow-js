@@ -1,7 +1,7 @@
 import type { TransferDescriptor } from "threads";
 import { expose, Transfer } from "threads/worker";
-import { PolygonData } from "../data";
 import { earcut } from "../algorithm/earcut";
+import type { PolygonData } from "../data";
 
 function earcutWorker(polygonData: PolygonData): TransferDescriptor {
   // NOTE!! Here we don't reconstruct a full arrow.Data instance to save on

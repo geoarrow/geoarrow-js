@@ -1,11 +1,4 @@
-import * as arrow from "apache-arrow";
-import {
-  LineStringVector,
-  MultiPolygonVector,
-  PointVector,
-  PolygonVector,
-} from "../vector.js";
-import { PointData } from "../data.js";
+import type * as arrow from "apache-arrow";
 import {
   getLineStringChild,
   getMultiPolygonChild,
@@ -13,6 +6,13 @@ import {
   getPolygonChild,
 } from "../child.js";
 import { EXTENSION_NAME } from "../constants.js";
+import type { PointData } from "../data.js";
+import type {
+  LineStringVector,
+  MultiPolygonVector,
+  PointVector,
+  PolygonVector,
+} from "../vector.js";
 
 class Bbox {
   minX: number;

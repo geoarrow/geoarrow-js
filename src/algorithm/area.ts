@@ -1,6 +1,6 @@
 import * as arrow from "apache-arrow";
-import { PolygonData } from "../data";
-import { PolygonVector } from "../vector";
+import type { PolygonData } from "../data";
+import type { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
 
 /**
@@ -18,7 +18,7 @@ export function area(
 
   const result = new Float64Array(input.length);
   for (let geomIndex = 0; geomIndex < input.length; geomIndex++) {
-    let polygon = makeMathGlPolygon(input, geomIndex);
+    const polygon = makeMathGlPolygon(input, geomIndex);
     result[geomIndex] = polygon.getArea();
   }
 
@@ -48,7 +48,7 @@ export function signedArea(
 
   const result = new Float64Array(input.length);
   for (let geomIndex = 0; geomIndex < input.length; geomIndex++) {
-    let polygon = makeMathGlPolygon(input, geomIndex);
+    const polygon = makeMathGlPolygon(input, geomIndex);
     result[geomIndex] = polygon.getSignedArea();
   }
 

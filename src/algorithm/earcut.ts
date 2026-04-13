@@ -1,7 +1,7 @@
 import { earcut as _earcut } from "@math.gl/polygon";
-import { PolygonData } from "../data";
-import { PolygonVector } from "../vector";
 import { getLineStringChild, getPointChild, getPolygonChild } from "../child";
+import type { PolygonData } from "../data";
+import type { PolygonVector } from "../vector";
 
 /**
  * Run earcut on polygon input

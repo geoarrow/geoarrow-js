@@ -1,4 +1,5 @@
-import { Data, DataType, Vector, BufferType } from "apache-arrow";
+import type { DataType } from "apache-arrow";
+import { BufferType, Data, Vector } from "apache-arrow";
 import type { Buffers } from "apache-arrow/data";
 
 type TypedArray =
@@ -52,7 +53,7 @@ export function hardClone<T extends DataType>(
   }
 
   // Clone the dictionary if there is one
-  let clonedDictionary: Vector | undefined = undefined;
+  let clonedDictionary: Vector | undefined;
   if (data.dictionary !== undefined) {
     clonedDictionary = hardClone(data.dictionary, force);
   }
