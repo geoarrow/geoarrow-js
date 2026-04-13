@@ -28,3 +28,11 @@ export interface LineStringTrait {
   numCoords(): number;
   coord(i: number): CoordTrait;
 }
+
+export interface PolygonTrait {
+  readonly geometryType: "Polygon";
+  dim(): Dimension;
+  numInteriors(): number;
+  exterior(): LineStringTrait | null;
+  interior(i: number): LineStringTrait;
+}

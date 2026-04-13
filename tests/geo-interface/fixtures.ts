@@ -3,6 +3,7 @@ import type {
   Dimension,
   LineStringTrait,
   PointTrait,
+  PolygonTrait,
 } from "../../src/geo-interface/index.js";
 
 export class RefCoord implements CoordTrait {
@@ -52,5 +53,26 @@ export class RefLineString implements LineStringTrait {
   }
   coord(i: number): CoordTrait {
     return new RefCoord(this._coords[i], this._dim);
+  }
+}
+
+export class RefPolygon implements PolygonTrait {
+  readonly geometryType = "Polygon" as const;
+  constructor(
+    private readonly _exterior: RefLineString | null,
+    private readonly _interiors: readonly RefLineString[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  exterior(): LineStringTrait | null {
+    return this._exterior;
+  }
+  numInteriors(): number {
+    return this._interiors.length;
+  }
+  interior(i: number): LineStringTrait {
+    return this._interiors[i];
   }
 }
