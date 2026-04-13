@@ -57,3 +57,19 @@ export interface MultiPolygonTrait {
   numPolygons(): number;
   polygon(i: number): PolygonTrait;
 }
+
+export interface GeometryCollectionTrait {
+  readonly geometryType: "GeometryCollection";
+  dim(): Dimension;
+  numGeometries(): number;
+  geometry(i: number): GeometryTrait;
+}
+
+export type GeometryTrait =
+  | PointTrait
+  | LineStringTrait
+  | PolygonTrait
+  | MultiPointTrait
+  | MultiLineStringTrait
+  | MultiPolygonTrait
+  | GeometryCollectionTrait;

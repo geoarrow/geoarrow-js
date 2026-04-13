@@ -1,6 +1,8 @@
 import type {
   CoordTrait,
   Dimension,
+  GeometryCollectionTrait,
+  GeometryTrait,
   LineStringTrait,
   MultiLineStringTrait,
   MultiPointTrait,
@@ -128,5 +130,22 @@ export class RefMultiPolygon implements MultiPolygonTrait {
   }
   polygon(i: number): PolygonTrait {
     return this._polygons[i];
+  }
+}
+
+export class RefGeometryCollection implements GeometryCollectionTrait {
+  readonly geometryType = "GeometryCollection" as const;
+  constructor(
+    private readonly _geometries: readonly GeometryTrait[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  numGeometries(): number {
+    return this._geometries.length;
+  }
+  geometry(i: number): GeometryTrait {
+    return this._geometries[i];
   }
 }
