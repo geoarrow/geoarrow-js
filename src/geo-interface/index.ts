@@ -8,3 +8,10 @@ export function sizeOf(dim: Dimension): number {
       return 3;
   }
 }
+
+export interface CoordTrait {
+  dim(): Dimension;
+  x(): number;
+  y(): number;
+  nth(n: number): number;
+}
