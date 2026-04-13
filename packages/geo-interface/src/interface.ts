@@ -26,8 +26,8 @@ export function sizeOf(dim: Dimension): number {
  * A single coordinate (2D or 3D).
  *
  * Implementations are expected to be lazy: accessors may read from an
- * underlying buffer on demand. Callers must respect {@link Coord.dim}
- * before calling {@link Coord.nth}; out-of-range access via `nth` is a
+ * underlying buffer on demand. Callers must respect {@link CoordInterface.dim}
+ * before calling {@link CoordInterface.nth}; out-of-range access via `nth` is a
  * caller bug and is not bounds-checked.
  */
 export interface CoordInterface {
@@ -142,7 +142,7 @@ export interface MultiPolygonInterface {
  * A heterogeneous collection of geometries.
  *
  * Children may be of any concrete geometry type, and may include nested
- * `GeometryCollection` values.
+ * `GeometryCollectionInterface` values.
  */
 export interface GeometryCollectionInterface {
   readonly geometryType: "GeometryCollection";
@@ -160,7 +160,7 @@ export interface GeometryCollectionInterface {
  * Use the `geometryType` discriminant to narrow to a concrete variant:
  *
  * ```ts
- * function describe(g: Geometry): string {
+ * function describe(g: GeometryInterface): string {
  *   switch (g.geometryType) {
  *     case "Point":      return "point";
  *     case "LineString": return `${g.numCoords()}-pt line`;
