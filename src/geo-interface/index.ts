@@ -50,3 +50,10 @@ export interface MultiLineStringTrait {
   numLineStrings(): number;
   lineString(i: number): LineStringTrait;
 }
+
+export interface MultiPolygonTrait {
+  readonly geometryType: "MultiPolygon";
+  dim(): Dimension;
+  numPolygons(): number;
+  polygon(i: number): PolygonTrait;
+}

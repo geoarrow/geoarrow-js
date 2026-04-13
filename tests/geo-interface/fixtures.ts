@@ -4,6 +4,7 @@ import type {
   LineStringTrait,
   MultiLineStringTrait,
   MultiPointTrait,
+  MultiPolygonTrait,
   PointTrait,
   PolygonTrait,
 } from "../../src/geo-interface/index.js";
@@ -110,5 +111,22 @@ export class RefMultiLineString implements MultiLineStringTrait {
   }
   lineString(i: number): LineStringTrait {
     return this._lineStrings[i];
+  }
+}
+
+export class RefMultiPolygon implements MultiPolygonTrait {
+  readonly geometryType = "MultiPolygon" as const;
+  constructor(
+    private readonly _polygons: readonly RefPolygon[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  numPolygons(): number {
+    return this._polygons.length;
+  }
+  polygon(i: number): PolygonTrait {
+    return this._polygons[i];
   }
 }
