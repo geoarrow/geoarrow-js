@@ -30,9 +30,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "build": "pnpm --recursive --filter=!docs build",
     "build:rollup": "rollup -c rollup.config.js",
     "build:workers": "node ./worker-build.mjs",
-    "build": "pnpm build:rollup && pnpm build:workers",
+    "build:old": "pnpm build:rollup && pnpm build:workers",
     "check:fix": "biome check --write .",
     "check": "biome check .",
     "clean": "rimraf dist",

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "outDir": "./dist",
     "allowJs": true,
     "declaration": true,
@@ -14,5 +14,10 @@
     "strictNullChecks": true,
     "lib": ["es2019.array", "es6", "dom"]
   },
-  "include": ["./src/**/*"]
+  "references": [
+    { "path": "packages/algorithm/tsconfig.build.json" },
+    { "path": "packages/geo-interface/tsconfig.build.json" },
+    { "path": "packages/schema/tsconfig.build.json" },
+    { "path": "packages/worker/tsconfig.build.json" }
+  ]
 }

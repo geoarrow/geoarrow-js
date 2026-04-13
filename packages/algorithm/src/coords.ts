@@ -1,3 +1,24 @@
+import type {
+  GeoArrowData,
+  LineStringData,
+  MultiLineStringData,
+  MultiPointData,
+  MultiPolygonData,
+  PointData,
+  PolygonData,
+} from "@geoarrow/schema";
+import {
+  getLineStringChild,
+  getMultiPolygonChild,
+  getPointChild,
+  getPolygonChild,
+  isLineStringData,
+  isMultiLineStringData,
+  isMultiPointData,
+  isMultiPolygonData,
+  isPointData,
+  isPolygonData,
+} from "@geoarrow/schema";
 import * as arrow from "apache-arrow";
 import type {
   LineString,
@@ -7,29 +28,6 @@ import type {
   Point,
   Polygon,
 } from "../../schema/src/type";
-import {
-  getLineStringChild,
-  getMultiPolygonChild,
-  getPointChild,
-  getPolygonChild,
-} from "../child";
-import type {
-  GeoArrowData,
-  LineStringData,
-  MultiLineStringData,
-  MultiPointData,
-  MultiPolygonData,
-  PointData,
-  PolygonData,
-} from "../data";
-import {
-  isLineStringData,
-  isMultiLineStringData,
-  isMultiPointData,
-  isMultiPolygonData,
-  isPointData,
-  isPolygonData,
-} from "../data";
 import { assert, assertFalse } from "./utils/assert";
 
 // For now, simplify our lives by focusing on 2D

@@ -1,7 +1,6 @@
+import type { PolygonData, PolygonVector } from "@geoarrow/schema";
 import { WINDING as _WINDING } from "@math.gl/polygon";
 import * as arrow from "apache-arrow";
-import type { PolygonData } from "../data";
-import type { PolygonVector } from "../vector";
 import { makeMathGlPolygon } from "./utils/polygon";
 
 export enum Winding {

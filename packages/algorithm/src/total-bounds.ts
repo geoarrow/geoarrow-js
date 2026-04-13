@@ -1,18 +1,18 @@
-import type * as arrow from "apache-arrow";
-import { EXTENSION_NAME } from "../../schema/src/constants.js";
+import type {
+  LineStringVector,
+  MultiPolygonVector,
+  PointData,
+  PointVector,
+  PolygonVector,
+} from "@geoarrow/schema";
 import {
+  EXTENSION_NAME,
   getLineStringChild,
   getMultiPolygonChild,
   getPointChild,
   getPolygonChild,
-} from "../child.js";
-import type { PointData } from "../data.js";
-import type {
-  LineStringVector,
-  MultiPolygonVector,
-  PointVector,
-  PolygonVector,
-} from "../vector.js";
+} from "@geoarrow/schema";
+import type * as arrow from "apache-arrow";
 
 class Bbox {
   minX: number;

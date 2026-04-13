@@ -1,7 +1,10 @@
+import type { PolygonData, PolygonVector } from "@geoarrow/schema";
+import {
+  getLineStringChild,
+  getPointChild,
+  getPolygonChild,
+} from "@geoarrow/schema";
 import { earcut as _earcut } from "@math.gl/polygon";
-import { getLineStringChild, getPointChild, getPolygonChild } from "../child";
-import type { PolygonData } from "../data";
-import type { PolygonVector } from "../vector";
 
 /**
  * Run earcut on polygon input

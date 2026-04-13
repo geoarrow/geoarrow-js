@@ -1,10 +1,10 @@
-import { Polygon } from "@math.gl/polygon";
+import type { PolygonData } from "@geoarrow/schema";
 import {
   getLineStringChild,
   getPointChild,
   getPolygonChild,
-} from "../../child";
-import type { PolygonData } from "../../data";
+} from "@geoarrow/schema";
+import { Polygon } from "@math.gl/polygon";
 
 export function makeMathGlPolygon(
   data: PolygonData,
