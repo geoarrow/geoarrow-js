@@ -1,5 +1,6 @@
 {
-  "name": "@geoarrow/geoarrow-js",
+  "name": "geoarrow-monorepo",
+  "private": true,
   "version": "0.3.3",
   "description": "TypeScript implementation of GeoArrow",
   "source": "src/index.ts",

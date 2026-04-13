@@ -1,7 +1,7 @@
+import type { PolygonData } from "@geoarrow/schema";
 import type { TransferDescriptor } from "threads";
 import { expose, Transfer } from "threads/worker";
-import { earcut } from "../algorithm/earcut";
-import type { PolygonData } from "../data";
+import { earcut } from "../earcut";
 
 function earcutWorker(polygonData: PolygonData): TransferDescriptor {
   // NOTE!! Here we don't reconstruct a full arrow.Data instance to save on
