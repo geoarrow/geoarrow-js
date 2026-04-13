@@ -1,4 +1,9 @@
-import type { CoordTrait, Dimension, PointTrait } from "../../src/geo-interface/index.js";
+import type {
+  CoordTrait,
+  Dimension,
+  LineStringTrait,
+  PointTrait,
+} from "../../src/geo-interface/index.js";
 
 export class RefCoord implements CoordTrait {
   constructor(
@@ -30,5 +35,22 @@ export class RefPoint implements PointTrait {
   }
   coord(): CoordTrait | null {
     return this._values === null ? null : new RefCoord(this._values, this._dim);
+  }
+}
+
+export class RefLineString implements LineStringTrait {
+  readonly geometryType = "LineString" as const;
+  constructor(
+    private readonly _coords: readonly (readonly number[])[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  numCoords(): number {
+    return this._coords.length;
+  }
+  coord(i: number): CoordTrait {
+    return new RefCoord(this._coords[i], this._dim);
   }
 }

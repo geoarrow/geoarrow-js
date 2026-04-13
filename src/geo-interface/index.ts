@@ -21,3 +21,10 @@ export interface PointTrait {
   dim(): Dimension;
   coord(): CoordTrait | null;
 }
+
+export interface LineStringTrait {
+  readonly geometryType: "LineString";
+  dim(): Dimension;
+  numCoords(): number;
+  coord(i: number): CoordTrait;
+}
