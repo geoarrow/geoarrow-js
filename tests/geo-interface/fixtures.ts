@@ -2,6 +2,7 @@ import type {
   CoordTrait,
   Dimension,
   LineStringTrait,
+  MultiPointTrait,
   PointTrait,
   PolygonTrait,
 } from "../../src/geo-interface/index.js";
@@ -74,5 +75,22 @@ export class RefPolygon implements PolygonTrait {
   }
   interior(i: number): LineStringTrait {
     return this._interiors[i];
+  }
+}
+
+export class RefMultiPoint implements MultiPointTrait {
+  readonly geometryType = "MultiPoint" as const;
+  constructor(
+    private readonly _points: readonly RefPoint[],
+    private readonly _dim: Dimension,
+  ) {}
+  dim(): Dimension {
+    return this._dim;
+  }
+  numPoints(): number {
+    return this._points.length;
+  }
+  point(i: number): PointTrait {
+    return this._points[i];
   }
 }

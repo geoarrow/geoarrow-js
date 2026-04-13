@@ -36,3 +36,10 @@ export interface PolygonTrait {
   exterior(): LineStringTrait | null;
   interior(i: number): LineStringTrait;
 }
+
+export interface MultiPointTrait {
+  readonly geometryType: "MultiPoint";
+  dim(): Dimension;
+  numPoints(): number;
+  point(i: number): PointTrait;
+}
