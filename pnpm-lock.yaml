@@ -61,10 +61,10 @@ importers:
   packages/builder:
     dependencies:
       '@geoarrow/geo-interface':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../geo-interface
       '@geoarrow/schema':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../schema
     devDependencies:
       '@geoarrow/test-fixtures':

@@ -40,8 +40,8 @@
     "apache-arrow": ">=15"
   },
   "dependencies": {
-    "@geoarrow/geo-interface": "workspace:*",
-    "@geoarrow/schema": "workspace:*"
+    "@geoarrow/geo-interface": "workspace:^",
+    "@geoarrow/schema": "workspace:^"
   },
   "devDependencies": {
     "@geoarrow/test-fixtures": "workspace:*",
