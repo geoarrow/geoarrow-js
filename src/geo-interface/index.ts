@@ -73,3 +73,5 @@ export type GeometryTrait =
   | MultiLineStringTrait
   | MultiPolygonTrait
   | GeometryCollectionTrait;
+
+export * from "./iter.js";
