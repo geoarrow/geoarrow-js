@@ -47,6 +47,7 @@
     "dist/",
     "src/"
   ],
+  "packageManager": "pnpm@10.25.0",
   "peerDependencies": {
     "apache-arrow": ">=15"
   },

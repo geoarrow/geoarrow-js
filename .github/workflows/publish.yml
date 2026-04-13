@@ -15,23 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - name: Use Node.js 20
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: "20"
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
 
-      - name: Set up Volta
-        uses: volta-cli/action@v5
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm test
 
-      - uses: actions/cache@v5
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ".yarn/cache"
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install
-        run: yarn install
-
-      - name: Publish to NPM
-        run: yarn publish --non-interactive
+      - name: Read version and publish
+        run: |
+          VERSION=$(jq -r .version package.json)
+          if [[ "$VERSION" == *alpha* || "$VERSION" == *beta* ]]; then
+            pnpm publish --no-git-checks --tag beta
+          else
+            pnpm publish --no-git-checks
+          fi
