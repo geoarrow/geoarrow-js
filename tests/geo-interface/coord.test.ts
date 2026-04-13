@@ -11,9 +11,13 @@ describe("CoordTrait (via RefCoord)", () => {
     expect(c.nth(1)).toBe(2.5);
   });
 
-  it("XYZ coord exposes z via nth(2)", () => {
+  it("XYZ coord exposes x, y, z via nth and accessors", () => {
     const c = new RefCoord([1, 2, 3], "XYZ");
     expect(c.dim()).toBe("XYZ");
+    expect(c.x()).toBe(1);
+    expect(c.y()).toBe(2);
+    expect(c.nth(0)).toBe(1);
+    expect(c.nth(1)).toBe(2);
     expect(c.nth(2)).toBe(3);
   });
 });
