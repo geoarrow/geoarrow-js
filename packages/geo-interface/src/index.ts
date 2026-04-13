@@ -1,4 +1,4 @@
-export {
+export type {
   Coord,
   Dimension,
   Geometry,
@@ -9,8 +9,8 @@ export {
   MultiPolygon,
   Point,
   Polygon,
-  sizeOf,
 } from "./interface.js";
+export { sizeOf } from "./interface.js";
 export {
   iterCoords,
   iterGeometries,
