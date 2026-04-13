@@ -1,0 +1,61 @@
+{
+  "name": "@geoarrow/algorithm",
+  "version": "0.4.0-beta.0",
+  "description": "Algorithms over GeoArrow data: area, coordinate access, earcut tessellation, exterior/interior extraction, reprojection, total bounds, winding.",
+  "keywords": [
+    "geoarrow",
+    "earcut",
+    "proj4",
+    "geospatial",
+    "arrow"
+  ],
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./earcut.worker.js": "./dist/earcut.worker.js",
+    "./earcut.worker.min.js": "./dist/earcut.worker.min.js"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:tsc": "tsc --build tsconfig.build.json",
+    "build:workers": "node ./worker-build.mjs",
+    "build": "pnpm build:tsc && pnpm build:workers",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "author": "Kyle Barron <kylebarron2@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoarrow/geoarrow-js.git",
+    "directory": "packages/algorithm"
+  },
+  "dependencies": {
+    "@geoarrow/schema": "workspace:^",
+    "@math.gl/polygon": "^4.0.0",
+    "proj4": "^2.9.2",
+    "threads": "^1.7.0"
+  },
+  "peerDependencies": {
+    "apache-arrow": ">=15"
+  },
+  "devDependencies": {
+    "@types/proj4": "^2.19.0",
+    "apache-arrow": ">=15",
+    "esbuild": "^0.25.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.0.18"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

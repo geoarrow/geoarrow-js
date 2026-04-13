@@ -1,0 +1,49 @@
+{
+  "name": "@geoarrow/schema",
+  "version": "0.4.0-beta.0",
+  "description": "GeoArrow Arrow type aliases, Data<T> wrappers, and typed child accessors.",
+  "keywords": [
+    "geoarrow",
+    "arrow",
+    "apache-arrow",
+    "geospatial",
+    "typescript"
+  ],
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "author": "Kyle Barron <kylebarron2@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoarrow/geoarrow-js.git",
+    "directory": "packages/schema"
+  },
+  "peerDependencies": {
+    "apache-arrow": ">=15"
+  },
+  "devDependencies": {
+    "apache-arrow": ">=15",
+    "typescript": "^6.0.2",
+    "vitest": "^4.0.18"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
