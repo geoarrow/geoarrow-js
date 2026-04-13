@@ -1,84 +1,26 @@
 {
-  "name": "@geoarrow/geoarrow-js",
-  "version": "0.3.3",
-  "description": "TypeScript implementation of GeoArrow",
-  "source": "src/index.ts",
-  "umd:main": "dist/geoarrow.umd.js",
-  "unpkg": "dist/geoarrow.umd.js",
-  "types": "dist/index.d.ts",
-  "browser": "dist/geoarrow.umd.js",
-  "jsdelivr": "dist/geoarrow.umd.js",
-  "module": "dist/geoarrow.es.mjs",
-  "main": "dist/geoarrow.cjs",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/geoarrow.cjs",
-      "default": "./dist/geoarrow.es.mjs"
-    },
-    "./earcut.worker.js": "./dist/earcut.worker.js",
-    "./earcut.worker.min.js": "./dist/earcut.worker.min.js"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/geoarrow/geoarrow-js.git"
-  },
-  "author": "Kyle Barron <kylebarron2@gmail.com>",
-  "license": "MIT",
+  "name": "geoarrow-monorepo",
+  "version": "0.4.0",
+  "private": true,
   "type": "module",
-  "scripts": {
-    "build:rollup": "rollup -c rollup.config.js",
-    "build:workers": "node ./worker-build.mjs",
-    "build": "pnpm build:rollup && pnpm build:workers",
-    "check:fix": "biome check --write .",
-    "check": "biome check .",
-    "clean": "rimraf dist",
-    "docs:build": "typedoc",
-    "docs:publish": "gh-pages -d docs_build",
-    "format:fix": "biome format --write .",
-    "format": "biome format .",
-    "lint:fix": "biome lint --write .",
-    "lint": "biome lint .",
-    "prepublishOnly": "pnpm clean && pnpm build",
-    "test": "vitest run",
-    "typecheck": "tsc --build",
-    "watch": "tsc --watch --declaration"
-  },
-  "files": [
-    "dist/",
-    "src/"
-  ],
   "packageManager": "pnpm@10.25.0",
-  "peerDependencies": {
-    "apache-arrow": ">=15"
+  "scripts": {
+    "build": "pnpm -r --filter=\"./packages/**\" build",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "clean": "pnpm -r --filter=\"./packages/**\" exec rimraf dist",
+    "test": "vitest run",
+    "typecheck": "tsc --build"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.9.3",
-    "@types/proj4": "^2",
-    "apache-arrow": "^15",
-    "esbuild": "^0.19.8",
-    "gh-pages": "^6.1.0",
     "rimraf": "^5.0.5",
-    "rollup": "^4.1.5",
-    "rollup-plugin-dts": "^6.1.0",
-    "ts-node": "^10.9.1",
-    "typedoc": "^0.25.4",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
   },
   "volta": {
     "node": "20.9.0"
-  },
-  "dependencies": {
-    "@math.gl/polygon": "^4.0.0",
-    "proj4": "^2.9.2",
-    "threads": "^1.7.0"
   }
 }

@@ -1,18 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "allowJs": true,
-    "declaration": true,
-    "noEmit": false,
-    "noEmitOnError": false,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "lib": ["es2019.array", "es6", "dom"]
-  },
-  "include": ["./src/**/*"]
+  "include": [],
+  "references": []
 }
