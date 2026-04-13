@@ -15,3 +15,9 @@ export interface CoordTrait {
   y(): number;
   nth(n: number): number;
 }
+
+export interface PointTrait {
+  readonly geometryType: "Point";
+  dim(): Dimension;
+  coord(): CoordTrait | null;
+}
