@@ -31,15 +31,20 @@
   },
   "devDependencies": {
     "@types/node": "^25.3.3",
+    "apache-arrow": ">=15",
     "jsdom": "^28.1.0",
     "typescript": "^6.0.2",
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "apache-arrow": ">=15",
-    "@geoarrow/schema": "workspace:^"
+    "@geoarrow/schema": "workspace:^",
+    "@math.gl/polygon": "^4.0.0",
+    "proj4": "^2.9.2",
+    "threads": "^1.7.0"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "apache-arrow": ">=15"
+  },
   "volta": {
     "extends": "../../package.json"
   }
