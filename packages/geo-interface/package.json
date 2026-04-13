@@ -2,7 +2,13 @@
   "name": "@geoarrow/geo-interface",
   "version": "0.4.0-beta.0",
   "description": "TypeScript interfaces for GeoArrow geometries — port of the Rust geo-traits crate.",
-  "keywords": ["geoarrow", "geometry", "geo-traits", "geospatial", "typescript"],
+  "keywords": [
+    "geoarrow",
+    "geometry",
+    "geo-traits",
+    "geospatial",
+    "typescript"
+  ],
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -12,7 +18,9 @@
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "test": "vitest run",

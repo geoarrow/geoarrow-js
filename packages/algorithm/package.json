@@ -2,7 +2,13 @@
   "name": "@geoarrow/algorithm",
   "version": "0.4.0-beta.0",
   "description": "Algorithms over GeoArrow data: area, coordinate access, earcut tessellation, exterior/interior extraction, reprojection, total bounds, winding.",
-  "keywords": ["geoarrow", "earcut", "proj4", "geospatial", "arrow"],
+  "keywords": [
+    "geoarrow",
+    "earcut",
+    "proj4",
+    "geospatial",
+    "arrow"
+  ],
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -14,7 +20,9 @@
     "./earcut.worker.min.js": "./dist/earcut.worker.min.js"
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build:tsc": "tsc --build tsconfig.build.json",
     "build:workers": "node ./worker-build.mjs",

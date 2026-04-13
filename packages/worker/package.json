@@ -2,7 +2,13 @@
   "name": "@geoarrow/worker",
   "version": "0.4.0-beta.0",
   "description": "Primitives for shipping GeoArrow Data across postMessage boundaries: hard-clone, rehydrate, transferable marshalling.",
-  "keywords": ["geoarrow", "arrow", "web-worker", "postmessage", "transferable"],
+  "keywords": [
+    "geoarrow",
+    "arrow",
+    "web-worker",
+    "postmessage",
+    "transferable"
+  ],
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -12,7 +18,9 @@
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "test": "vitest run",

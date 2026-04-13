@@ -2,7 +2,13 @@
   "name": "@geoarrow/schema",
   "version": "0.4.0-beta.0",
   "description": "GeoArrow Arrow type aliases, Data<T> wrappers, and typed child accessors.",
-  "keywords": ["geoarrow", "arrow", "apache-arrow", "geospatial", "typescript"],
+  "keywords": [
+    "geoarrow",
+    "arrow",
+    "apache-arrow",
+    "geospatial",
+    "typescript"
+  ],
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -12,7 +18,9 @@
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "test": "vitest run",
