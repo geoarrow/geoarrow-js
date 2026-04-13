@@ -3,7 +3,7 @@
 - **Status:** Draft
 - **Date:** 2026-04-13
 - **Scope:** PR 2 of the WKB parser roadmap. Defines the `@geoarrow/builder` package: capacity classes, internal helpers, and six homogeneous geometry builders.
-- **Supersedes:** the PR 2 sketch in [`2026-04-12-wkb-parser-design.md`](2026-04-12-wkb-parser-design.md). Key revisions captured in this spec are (1) the repo is now a pnpm monorepo, so builders live in their own package; (2) interface names use the `Interface` suffix shipped in PR 1, not `Trait`; (3) there is no `@geoarrow/geometry` package — `geoarrow.geometry` support is additive to `@geoarrow/schema` and `@geoarrow/builder` in a later PR.
+- **Supersedes:** the PR 2 sketch in [`2026-04-12-wkb-parser-design.md`](2026-04-12-wkb-parser-design.md). Key revisions captured in this spec are (1) the repo is now a pnpm monorepo, so builders live in their own package; (2) interface names use the `Interface` suffix shipped in PR 1, not `Trait`; (3) there is no `@geoarrow/geometry` package — `geoarrow.geometry` support is additive to `@geoarrow/schema` and `@geoarrow/builder` in a later PR; (4) this revision reconciles the spec with the actual PR A reshape outcome: builder uses `tsc --build` + ESM-only (not `tsup` dual bundles), and shared test fixtures live in a new private workspace package `@geoarrow/test-fixtures` (not a subpath export on `@geoarrow/geo-interface`).
 
 ## Motivation
 
@@ -15,26 +15,32 @@ This PR has no consumers of its own. It exists to be consumed by PR 3 (`@geoarro
 
 ## Prerequisites
 
-PR 2 cannot be started until **PR A** (the repo reshape) has landed. PR A is a prerequisite PR, not part of this spec, and will be planned separately. Its scope is mechanical: convert the single-package repo into a pnpm workspace under `packages/*`, move existing source files into per-package trees, and wire up per-package tsconfig/tsup/biome/vitest. No logic changes.
+PR A (the repo reshape into a pnpm monorepo) has landed. When PR 2 begins, the working tree contains these four packages:
 
-Concretely, PR 2 assumes that when it begins, the working tree looks like this:
+- `packages/geo-interface/` — `@geoarrow/geo-interface`. The PR 1 interface contract (`CoordInterface`, `PointInterface`, `LineStringInterface`, `PolygonInterface`, `MultiPointInterface`, `MultiLineStringInterface`, `MultiPolygonInterface`, `GeometryInterface`, `Dimension`, `sizeOf`). Reference fixture classes currently live at [packages/geo-interface/tests/fixtures.ts](../../packages/geo-interface/tests/fixtures.ts); PR 2 moves them out to `@geoarrow/test-fixtures` (see below).
+- `packages/schema/` — `@geoarrow/schema`. Exports the GeoArrow type aliases (`Point`, `LineString`, `Polygon`, `MultiPoint`, `MultiLineString`, `MultiPolygon`), `Data<T>` aliases (`PointData`, `LineStringData`, etc.), and the `isX` type guards. `type.ts` also defines `Coord`, `InterleavedCoord`, and `SeparatedCoord`, but [packages/schema/src/index.ts](../../packages/schema/src/index.ts) does not currently re-export them.
+- `packages/worker/` — `@geoarrow/worker`. Depends on `@geoarrow/schema` only.
+- `packages/algorithm/` — `@geoarrow/algorithm`. Depends on `@geoarrow/schema` and `@geoarrow/worker`.
 
-- `packages/geo-interface/` — `@geoarrow/geo-interface`. The PR 1 contents of `src/geo-interface/` are moved here. Reference fixture classes (`RefPoint`, `RefLineString`, etc., currently at [tests/geo-interface/fixtures.ts](tests/geo-interface/fixtures.ts)) move to `packages/geo-interface/tests/fixtures.ts` and are exposed via a package export so other workspace packages can import them in their own tests.
-- `packages/schema/` — `@geoarrow/schema`. Contains `type.ts`, `data.ts`, `vector.ts`, `child.ts`, `constants.ts`, exporting the existing GeoArrow type aliases (`Point`, `LineString`, etc.), `Data<T>` aliases (`PointData`, `LineStringData`, etc.), and the `isX` type guards.
-- `packages/worker/` — `@geoarrow/worker`. Contains the existing `hard-clone.ts`, `rehydrate.ts`, `transferable.ts`. Depends on `@geoarrow/schema` only.
-- `packages/algorithm/` — `@geoarrow/algorithm`. Contains `area`, `coords`, `earcut`, `exterior`, `proj`, `total-bounds`, `winding`, plus the prebuilt worker-bundle entry point for the earcut worker. Depends on `@geoarrow/schema` and `@geoarrow/worker`.
+`packages/builder/` does not exist yet — creating it is PR 2's job.
 
-`packages/builder/` does not exist yet — creating it is PR 2's job. PR 2 also does not touch any of the above packages beyond adding itself as a sibling and importing from `@geoarrow/geo-interface` and `@geoarrow/schema`.
+### Prep steps PR 2 bundles
 
-The PR 1 interface contract PR 2 consumes: `CoordInterface`, `PointInterface`, `LineStringInterface`, `PolygonInterface`, `MultiPointInterface`, `MultiLineStringInterface`, `MultiPolygonInterface`, `GeometryInterface`, `Dimension`, `sizeOf`. The `@geoarrow/schema` types PR 2 consumes: `Point`, `LineString`, `Polygon`, `MultiPoint`, `MultiLineString`, `MultiPolygon` type aliases and their `Data<T>` siblings.
+Two small prep steps land in PR 2 alongside the new builder package. Neither is its own PR because both are tightly coupled to the builder work.
+
+**1. Promote `Coord`, `InterleavedCoord`, and `SeparatedCoord` to the `@geoarrow/schema` barrel.** They are defined at [packages/schema/src/type.ts:7](../../packages/schema/src/type.ts#L7) but not re-exported from [packages/schema/src/index.ts](../../packages/schema/src/index.ts). `CoordBufferBuilder.finish()` returns `Data<InterleavedCoord>`, so the type needs to be importable from the package root. The change is additive: add three `export type` entries to the schema barrel, no runtime code touched.
+
+**2. Create `@geoarrow/test-fixtures` — a private workspace package for shared test fixtures.** New `packages/test-fixtures/` with `"private": true` in its `package.json` so it never publishes to npm. Contains the reference implementation classes from PR 1 (`RefCoord`, `RefPoint`, `RefLineString`, `RefPolygon`, `RefMultiPoint`, `RefMultiLineString`, `RefMultiPolygon`, `RefGeometryCollection`) moved out of [packages/geo-interface/tests/fixtures.ts](../../packages/geo-interface/tests/fixtures.ts) into `packages/test-fixtures/src/`. `@geoarrow/geo-interface`'s own tests are updated to import from `@geoarrow/test-fixtures` instead of the relative path. Both `@geoarrow/geo-interface` and `@geoarrow/builder` list `@geoarrow/test-fixtures` under `devDependencies` with `workspace:*`. Nothing ships in either public tarball.
+
+The PR 1 interface contract PR 2 consumes: `CoordInterface`, `PointInterface`, `LineStringInterface`, `PolygonInterface`, `MultiPointInterface`, `MultiLineStringInterface`, `MultiPolygonInterface`, `GeometryInterface`, `Dimension`, `sizeOf`. The `@geoarrow/schema` types PR 2 consumes: `Point`, `LineString`, `Polygon`, `MultiPoint`, `MultiLineString`, `MultiPolygon` type aliases, their `Data<T>` siblings, and — after prep step 1 — `InterleavedCoord`.
 
 ## Package layout
 
 ```
 packages/builder/
 ├── package.json              # "@geoarrow/builder"
-├── tsup.config.ts
 ├── tsconfig.json
+├── tsconfig.build.json
 ├── src/
 │   ├── index.ts              # barrel: re-export every public builder and capacity
 │   ├── internal/
@@ -74,18 +80,33 @@ packages/builder/
   "name": "@geoarrow/builder",
   "version": "<workspace-synced>",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@geoarrow/geo-interface": "workspace:*",
     "@geoarrow/schema": "workspace:*",
     "apache-arrow": "^17 || ^18"
+  },
+  "devDependencies": {
+    "@geoarrow/test-fixtures": "workspace:*"
   }
 }
 ```
 
-tsup produces a dual ESM/CJS bundle for each leaf package. No worker plumbing in this package, so no rollup.
+Builder matches the other workspace packages: ESM-only, `tsc --build tsconfig.build.json` as the build, vitest as the test runner. No dual ESM/CJS bundle, no bundler step — the other leaf packages already ship this way and builder has no reason to differ. No worker plumbing, so no rollup.
 
 ### Files organized per-type, not consolidated
 
@@ -487,7 +508,13 @@ One test file per geometry builder under `packages/builder/tests/`, plus one per
 
 ### Test fixtures
 
-PR 1's reference implementation classes (`RefPoint`, `RefLineString`, `RefPolygon`, `RefMultiPoint`, `RefMultiLineString`, `RefMultiPolygon`, `RefGeometryCollection`, `RefCoord`) live at `packages/geo-interface/tests/fixtures.ts` after the PR A reshape, exposed via a package export (`@geoarrow/geo-interface/tests/fixtures` or similar — exact export path configured during PR A).
+PR 1's reference implementation classes (`RefCoord`, `RefPoint`, `RefLineString`, `RefPolygon`, `RefMultiPoint`, `RefMultiLineString`, `RefMultiPolygon`, `RefGeometryCollection`) live in the private workspace package `@geoarrow/test-fixtures` (see Prerequisites → Prep steps). Builder tests import them via a plain package import:
+
+```ts
+import { RefLineString, RefCoord } from "@geoarrow/test-fixtures";
+```
+
+`@geoarrow/test-fixtures` is `"private": true` and never publishes to npm, so its contents are a pnpm-workspace-only concern. Both `@geoarrow/geo-interface`'s tests and `@geoarrow/builder`'s tests consume the same fixture definitions, which is what makes the mirroring discipline (capacity-walk decisions vs. builder-push decisions) easy to verify against a shared source of truth.
 
 These fixtures drive every builder test. They cost ~100 lines to define and cover every shape the builders accept, including empty geometries and all dimensions.
 
