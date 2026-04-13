@@ -28,6 +28,7 @@
   "files": [],
   "references": [
     { "path": "packages/algorithm/tsconfig.build.json" },
+    { "path": "packages/builder/tsconfig.build.json" },
     { "path": "packages/geo-interface/tsconfig.build.json" },
     { "path": "packages/schema/tsconfig.build.json" },
     { "path": "packages/test-fixtures/tsconfig.build.json" },
