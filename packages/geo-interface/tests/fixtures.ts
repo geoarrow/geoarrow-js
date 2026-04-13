@@ -1,17 +1,17 @@
 import type {
-  CoordInterface,
+  Coord,
   Dimension,
-  GeometryCollectionInterface,
-  GeometryInterface,
-  LineStringInterface,
-  MultiLineStringInterface,
-  MultiPointInterface,
-  MultiPolygonInterface,
-  PointInterface,
-  PolygonInterface,
-} from "../../src/geo-interface/index.js";
+  Geometry,
+  GeometryCollection,
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from "../src/index.js";
 
-export class RefCoord implements CoordInterface {
+export class RefCoord implements Coord {
   constructor(
     private readonly _values: readonly number[],
     private readonly _dim: Dimension,
@@ -30,7 +30,7 @@ export class RefCoord implements CoordInterface {
   }
 }
 
-export class RefPoint implements PointInterface {
+export class RefPoint implements Point {
   readonly geometryType = "Point" as const;
   constructor(
     private readonly _values: readonly number[] | null,
@@ -39,12 +39,12 @@ export class RefPoint implements PointInterface {
   dim(): Dimension {
     return this._dim;
   }
-  coord(): CoordInterface | null {
+  coord(): Coord | null {
     return this._values === null ? null : new RefCoord(this._values, this._dim);
   }
 }
 
-export class RefLineString implements LineStringInterface {
+export class RefLineString implements LineString {
   readonly geometryType = "LineString" as const;
   constructor(
     private readonly _coords: readonly (readonly number[])[],
@@ -56,12 +56,12 @@ export class RefLineString implements LineStringInterface {
   numCoords(): number {
     return this._coords.length;
   }
-  coord(i: number): CoordInterface {
+  coord(i: number): Coord {
     return new RefCoord(this._coords[i], this._dim);
   }
 }
 
-export class RefPolygon implements PolygonInterface {
+export class RefPolygon implements Polygon {
   readonly geometryType = "Polygon" as const;
   constructor(
     private readonly _exterior: RefLineString | null,
@@ -71,18 +71,18 @@ export class RefPolygon implements PolygonInterface {
   dim(): Dimension {
     return this._dim;
   }
-  exterior(): LineStringInterface | null {
+  exterior(): LineString | null {
     return this._exterior;
   }
   numInteriors(): number {
     return this._interiors.length;
   }
-  interior(i: number): LineStringInterface {
+  interior(i: number): LineString {
     return this._interiors[i];
   }
 }
 
-export class RefMultiPoint implements MultiPointInterface {
+export class RefMultiPoint implements MultiPoint {
   readonly geometryType = "MultiPoint" as const;
   constructor(
     private readonly _points: readonly RefPoint[],
@@ -94,12 +94,12 @@ export class RefMultiPoint implements MultiPointInterface {
   numPoints(): number {
     return this._points.length;
   }
-  point(i: number): PointInterface {
+  point(i: number): Point {
     return this._points[i];
   }
 }
 
-export class RefMultiLineString implements MultiLineStringInterface {
+export class RefMultiLineString implements MultiLineString {
   readonly geometryType = "MultiLineString" as const;
   constructor(
     private readonly _lineStrings: readonly RefLineString[],
@@ -111,12 +111,12 @@ export class RefMultiLineString implements MultiLineStringInterface {
   numLineStrings(): number {
     return this._lineStrings.length;
   }
-  lineString(i: number): LineStringInterface {
+  lineString(i: number): LineString {
     return this._lineStrings[i];
   }
 }
 
-export class RefMultiPolygon implements MultiPolygonInterface {
+export class RefMultiPolygon implements MultiPolygon {
   readonly geometryType = "MultiPolygon" as const;
   constructor(
     private readonly _polygons: readonly RefPolygon[],
@@ -128,15 +128,15 @@ export class RefMultiPolygon implements MultiPolygonInterface {
   numPolygons(): number {
     return this._polygons.length;
   }
-  polygon(i: number): PolygonInterface {
+  polygon(i: number): Polygon {
     return this._polygons[i];
   }
 }
 
-export class RefGeometryCollection implements GeometryCollectionInterface {
+export class RefGeometryCollection implements GeometryCollection {
   readonly geometryType = "GeometryCollection" as const;
   constructor(
-    private readonly _geometries: readonly GeometryInterface[],
+    private readonly _geometries: readonly Geometry[],
     private readonly _dim: Dimension,
   ) {}
   dim(): Dimension {
@@ -145,7 +145,7 @@ export class RefGeometryCollection implements GeometryCollectionInterface {
   numGeometries(): number {
     return this._geometries.length;
   }
-  geometry(i: number): GeometryInterface {
+  geometry(i: number): Geometry {
     return this._geometries[i];
   }
 }

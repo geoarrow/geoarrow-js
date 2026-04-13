@@ -6,7 +6,7 @@ import {
   iterLineStrings,
   iterPoints,
   iterPolygons,
-} from "../../src/geo-interface/index.js";
+} from "../src/index.js";
 import {
   RefGeometryCollection,
   RefLineString,

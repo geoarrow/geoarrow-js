@@ -1,6 +1,7 @@
 export {
   Coord,
   Dimension,
+  Geometry,
   GeometryCollection,
   LineString,
   MultiLineString,
