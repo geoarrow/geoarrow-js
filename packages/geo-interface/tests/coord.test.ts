@@ -1,5 +1,5 @@
+import { RefCoord } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefCoord } from "./fixtures.js";
 
 describe("CoordTrait (via RefCoord)", () => {
   it("XY coord reports dim, x, y, and nth", () => {

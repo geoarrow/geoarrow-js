@@ -1,5 +1,5 @@
+import { RefLineString, RefPolygon } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefLineString, RefPolygon } from "./fixtures.js";
 
 describe("PolygonTrait (via RefPolygon)", () => {
   it("polygon with an exterior ring and one hole", () => {

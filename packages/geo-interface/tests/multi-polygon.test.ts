@@ -1,5 +1,9 @@
+import {
+  RefLineString,
+  RefMultiPolygon,
+  RefPolygon,
+} from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefLineString, RefMultiPolygon, RefPolygon } from "./fixtures.js";
 
 describe("MultiPolygonTrait (via RefMultiPolygon)", () => {
   it("reports count and per-index polygons", () => {

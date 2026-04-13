@@ -9,7 +9,7 @@ import type {
   MultiPolygonInterface,
   PointInterface,
   PolygonInterface,
-} from "../src/index.js";
+} from "@geoarrow/geo-interface";
 
 export class RefCoord implements CoordInterface {
   constructor(
