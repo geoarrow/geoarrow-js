@@ -1,5 +1,5 @@
+import { RefMultiPoint, RefPoint } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefMultiPoint, RefPoint } from "./fixtures.js";
 
 describe("MultiPointTrait (via RefMultiPoint)", () => {
   it("reports count and per-index points", () => {

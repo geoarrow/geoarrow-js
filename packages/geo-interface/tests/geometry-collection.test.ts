@@ -1,5 +1,9 @@
+import {
+  RefGeometryCollection,
+  RefLineString,
+  RefPoint,
+} from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefGeometryCollection, RefLineString, RefPoint } from "./fixtures.js";
 
 describe("GeometryCollectionTrait (via RefGeometryCollection)", () => {
   it("reports count and heterogeneous children", () => {
