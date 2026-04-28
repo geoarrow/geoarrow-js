@@ -1,11 +1,12 @@
 {
-  "name": "@geoarrow/geo-interface",
+  "name": "@geoarrow/builder",
   "version": "0.4.0-beta.0",
-  "description": "TypeScript interfaces for GeoArrow geometries — port of the Rust geo-traits crate.",
+  "description": "Two-pass builders for GeoArrow homogeneous geometry types. Walk with a capacity class, then push through a builder to emit Arrow Data<T>.",
   "keywords": [
     "geoarrow",
-    "geometry",
-    "geo-traits",
+    "arrow",
+    "apache-arrow",
+    "builder",
     "geospatial",
     "typescript"
   ],
@@ -33,10 +34,18 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/geoarrow/geoarrow-js.git",
-    "directory": "packages/geo-interface"
+    "directory": "packages/builder"
+  },
+  "peerDependencies": {
+    "apache-arrow": ">=15"
+  },
+  "dependencies": {
+    "@geoarrow/geo-interface": "workspace:^",
+    "@geoarrow/schema": "workspace:^"
   },
   "devDependencies": {
     "@geoarrow/test-fixtures": "workspace:*",
+    "apache-arrow": ">=15",
     "typescript": "^6.0.2",
     "vitest": "^4.0.18"
   },
