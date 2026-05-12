@@ -1,0 +1,29 @@
+{
+  "name": "@geoarrow/test-fixtures",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reference implementations of @geoarrow/geo-interface types for use as test fixtures across workspace packages. Never published.",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@geoarrow/geo-interface": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

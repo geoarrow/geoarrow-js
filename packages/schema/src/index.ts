@@ -25,13 +25,16 @@ export {
   isPolygonData,
 } from "./data.js";
 export type {
+  Coord,
   GeoArrowType,
+  InterleavedCoord,
   LineString,
   MultiLineString,
   MultiPoint,
   MultiPolygon,
   Point,
   Polygon,
+  SeparatedCoord,
 } from "./type.js";
 export {
   isLineString,
