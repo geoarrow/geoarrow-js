@@ -1,5 +1,5 @@
+import { RefLineString } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefLineString } from "./fixtures.js";
 
 describe("LineStringTrait (via RefLineString)", () => {
   it("reports count, dim, and per-index coords", () => {

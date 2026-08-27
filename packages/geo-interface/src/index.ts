@@ -1,14 +1,14 @@
 export type {
-  Coord,
+  CoordInterface,
   Dimension,
-  Geometry,
-  GeometryCollection,
-  LineString,
-  MultiLineString,
-  MultiPoint,
-  MultiPolygon,
-  Point,
-  Polygon,
+  GeometryCollectionInterface,
+  GeometryInterface,
+  LineStringInterface,
+  MultiLineStringInterface,
+  MultiPointInterface,
+  MultiPolygonInterface,
+  PointInterface,
+  PolygonInterface,
 } from "./interface.js";
 export { sizeOf } from "./interface.js";
 export {

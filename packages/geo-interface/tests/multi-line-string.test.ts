@@ -1,5 +1,5 @@
+import { RefLineString, RefMultiLineString } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefLineString, RefMultiLineString } from "./fixtures.js";
 
 describe("MultiLineStringTrait (via RefMultiLineString)", () => {
   it("reports count and per-index line strings", () => {

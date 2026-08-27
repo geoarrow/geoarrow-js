@@ -1,5 +1,5 @@
+import { RefPoint } from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
-import { RefPoint } from "./fixtures.js";
 
 describe("PointTrait (via RefPoint)", () => {
   it("non-empty point exposes coord", () => {
