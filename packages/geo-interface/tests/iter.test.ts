@@ -1,3 +1,12 @@
+import {
+  RefGeometryCollection,
+  RefLineString,
+  RefMultiLineString,
+  RefMultiPoint,
+  RefMultiPolygon,
+  RefPoint,
+  RefPolygon,
+} from "@geoarrow/test-fixtures";
 import { describe, expect, it } from "vitest";
 import {
   iterCoords,
@@ -7,15 +16,6 @@ import {
   iterPoints,
   iterPolygons,
 } from "../src/index.js";
-import {
-  RefGeometryCollection,
-  RefLineString,
-  RefMultiLineString,
-  RefMultiPoint,
-  RefMultiPolygon,
-  RefPoint,
-  RefPolygon,
-} from "./fixtures.js";
 
 describe("iterCoords", () => {
   it("yields coords in order", () => {

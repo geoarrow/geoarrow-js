@@ -26,11 +26,11 @@ export function sizeOf(dim: Dimension): number {
  * A single coordinate (2D or 3D).
  *
  * Implementations are expected to be lazy: accessors may read from an
- * underlying buffer on demand. Callers must respect {@link Coord.dim}
- * before calling {@link Coord.nth}; out-of-range access via `nth` is a
+ * underlying buffer on demand. Callers must respect {@link CoordInterface.dim}
+ * before calling {@link CoordInterface.nth}; out-of-range access via `nth` is a
  * caller bug and is not bounds-checked.
  */
-export interface Coord {
+export interface CoordInterface {
   /** Dimension of this coordinate. */
   dim(): Dimension;
   /** First ordinate. Always valid. */
@@ -50,12 +50,12 @@ export interface Coord {
  * An empty point (a point with no coordinate) is a distinct state from a
  * point at the origin: `coord()` returns `null` for an empty point.
  */
-export interface Point {
+export interface PointInterface {
   readonly geometryType: "Point";
   /** Dimension of this point's coordinate, if any. */
   dim(): Dimension;
   /** The point's coordinate, or `null` if the point is empty. */
-  coord(): Coord | null;
+  coord(): CoordInterface | null;
 }
 
 /**
@@ -64,14 +64,14 @@ export interface Point {
  * An empty line string has `numCoords() === 0`. Callers must respect
  * `numCoords()` before calling `coord(i)`.
  */
-export interface LineString {
+export interface LineStringInterface {
   readonly geometryType: "LineString";
   /** Dimension of every coordinate in this line string. */
   dim(): Dimension;
   /** Number of coordinates in this line string. */
   numCoords(): number;
   /** The i-th coordinate. No bounds check. */
-  coord(i: number): Coord;
+  coord(i: number): CoordInterface;
 }
 
 /**
@@ -81,16 +81,16 @@ export interface LineString {
  * Per the OGC Simple Features spec, an empty polygon also has zero interior
  * rings, so `numInteriors() === 0` for any empty polygon.
  */
-export interface Polygon {
+export interface PolygonInterface {
   readonly geometryType: "Polygon";
   /** Dimension of every coordinate in this polygon. */
   dim(): Dimension;
   /** Number of interior rings (holes). */
   numInteriors(): number;
   /** The exterior ring, or `null` if the polygon is empty. */
-  exterior(): LineString | null;
+  exterior(): LineStringInterface | null;
   /** The i-th interior ring. No bounds check. */
-  interior(i: number): LineString;
+  interior(i: number): LineStringInterface;
 }
 
 /**
@@ -98,14 +98,14 @@ export interface Polygon {
  *
  * An empty multi-point has `numPoints() === 0`.
  */
-export interface MultiPoint {
+export interface MultiPointInterface {
   readonly geometryType: "MultiPoint";
   /** Dimension of every point in this multi-point. */
   dim(): Dimension;
   /** Number of points. */
   numPoints(): number;
   /** The i-th point. No bounds check. */
-  point(i: number): Point;
+  point(i: number): PointInterface;
 }
 
 /**
@@ -113,14 +113,14 @@ export interface MultiPoint {
  *
  * An empty multi-line-string has `numLineStrings() === 0`.
  */
-export interface MultiLineString {
+export interface MultiLineStringInterface {
   readonly geometryType: "MultiLineString";
   /** Dimension of every line string in this multi-line-string. */
   dim(): Dimension;
   /** Number of line strings. */
   numLineStrings(): number;
   /** The i-th line string. No bounds check. */
-  lineString(i: number): LineString;
+  lineString(i: number): LineStringInterface;
 }
 
 /**
@@ -128,30 +128,30 @@ export interface MultiLineString {
  *
  * An empty multi-polygon has `numPolygons() === 0`.
  */
-export interface MultiPolygon {
+export interface MultiPolygonInterface {
   readonly geometryType: "MultiPolygon";
   /** Dimension of every polygon in this multi-polygon. */
   dim(): Dimension;
   /** Number of polygons. */
   numPolygons(): number;
   /** The i-th polygon. No bounds check. */
-  polygon(i: number): Polygon;
+  polygon(i: number): PolygonInterface;
 }
 
 /**
  * A heterogeneous collection of geometries.
  *
  * Children may be of any concrete geometry type, and may include nested
- * `GeometryCollection` values.
+ * `GeometryCollectionInterface` values.
  */
-export interface GeometryCollection {
+export interface GeometryCollectionInterface {
   readonly geometryType: "GeometryCollection";
   /** Dimension of this collection. Children are expected to share this dimension. */
   dim(): Dimension;
   /** Number of child geometries. */
   numGeometries(): number;
   /** The i-th child geometry. No bounds check. */
-  geometry(i: number): Geometry;
+  geometry(i: number): GeometryInterface;
 }
 
 /**
@@ -160,7 +160,7 @@ export interface GeometryCollection {
  * Use the `geometryType` discriminant to narrow to a concrete variant:
  *
  * ```ts
- * function describe(g: Geometry): string {
+ * function describe(g: GeometryInterface): string {
  *   switch (g.geometryType) {
  *     case "Point":      return "point";
  *     case "LineString": return `${g.numCoords()}-pt line`;
@@ -169,13 +169,13 @@ export interface GeometryCollection {
  * }
  * ```
  */
-export type Geometry =
-  | Point
-  | LineString
-  | Polygon
-  | MultiPoint
-  | MultiLineString
-  | MultiPolygon
-  | GeometryCollection;
+export type GeometryInterface =
+  | PointInterface
+  | LineStringInterface
+  | PolygonInterface
+  | MultiPointInterface
+  | MultiLineStringInterface
+  | MultiPolygonInterface
+  | GeometryCollectionInterface;
 
 export * from "./iter.js";
